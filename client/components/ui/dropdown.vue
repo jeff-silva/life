@@ -2,13 +2,11 @@
     <div class="ui-dropdown d-inline-block" :class="`ui-dropdown-position-${position}`">
         <slot></slot>
 
-        <transition name="el-fade-in-linear">
-            <div class="ui-dropdown-dropdown bg-white shadow-sm" v-if="props.shown">
-                <slot name="dropdown">
-                    Ações
-                </slot>
-            </div>
-        </transition>
+        <div class="ui-dropdown-dropdown bg-white shadow-sm" :class="{'ui-dropdown-dropdown-shown':props.shown}">
+            <slot name="dropdown">
+                Ações
+            </slot>
+        </div>
     </div>
 </template>
 
@@ -63,7 +61,16 @@ export default {
 
 .ui-dropdown-dropdown {
     position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 300ms ease;
+}
+
+.ui-dropdown .ui-dropdown-dropdown-shown,
+.ui-dropdown:hover .ui-dropdown-dropdown {
     z-index: 9;
+    opacity: 1;
+    visibility: visible;
 }
 
 .ui-dropdown-position-top-left .ui-dropdown-dropdown {bottom:100%; left:0; margin-bottom:10px;}

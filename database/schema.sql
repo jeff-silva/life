@@ -35,6 +35,20 @@ CREATE TABLE IF NOT EXISTS `files` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 
+CREATE TABLE IF NOT EXISTS `life_events` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `interaction_line` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `eval` text COLLATE utf8mb4_unicode_ci,
+  `chance` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+
+
 CREATE TABLE IF NOT EXISTS `life_persons` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

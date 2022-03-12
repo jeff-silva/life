@@ -128,7 +128,7 @@
                                 </slot>
     
                                 <td>
-                                    <ui-dropdown position="left">
+                                    <ui-dropdown position="left" trigger="hover">
                                         <button type="button" class="btn btn-light" style="border-radius:50%;">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </button>

@@ -44,6 +44,51 @@
     'route' => 'files/export',
     'call' => '\\App\\Http\\Controllers\\FilesController@export',
   ],
+  'life-events-search' => [
+    'route' => 'life-events/search',
+    'call' => '\\App\\Http\\Controllers\\LifeEventsController@search',
+    'method' => 'get',
+  ],
+  'life-events-find' => [
+    'method' => 'get',
+    'route' => 'life-events/find/{id}',
+    'call' => '\\App\\Http\\Controllers\\LifeEventsController@find',
+  ],
+  'life-events-save' => [
+    'method' => 'post',
+    'route' => 'life-events/save',
+    'call' => '\\App\\Http\\Controllers\\LifeEventsController@save',
+  ],
+  'life-events-valid' => [
+    'method' => 'post',
+    'route' => 'life-events/valid',
+    'call' => '\\App\\Http\\Controllers\\LifeEventsController@valid',
+  ],
+  'life-events-delete' => [
+    'method' => 'post',
+    'route' => 'life-events/delete',
+    'call' => '\\App\\Http\\Controllers\\LifeEventsController@delete',
+  ],
+  'life-events-restore' => [
+    'method' => 'post',
+    'route' => 'life-events/restore',
+    'call' => '\\App\\Http\\Controllers\\LifeEventsController@restore',
+  ],
+  'life-events-clone' => [
+    'method' => 'get',
+    'route' => 'life-events/clone/{id}',
+    'call' => '\\App\\Http\\Controllers\\LifeEventsController@clone',
+  ],
+  'life-events-import' => [
+    'method' => 'post',
+    'route' => 'life-events/import',
+    'call' => '\\App\\Http\\Controllers\\LifeEventsController@import',
+  ],
+  'life-events-export' => [
+    'method' => 'get',
+    'route' => 'life-events/export',
+    'call' => '\\App\\Http\\Controllers\\LifeEventsController@export',
+  ],
   'life-persons-search' => [
     'route' => 'life-persons/search',
     'call' => '\\App\\Http\\Controllers\\LifePersonsController@search',

@@ -97,11 +97,9 @@ export default {
                 confirmButtonText: `Lista de ${this.plural}`,
                 showCancelButton: true,
                 cancelButtonText: `Fechar`,
-            }).then(resp => {
-                if (resp.isConfirmed) {
-                    this.$router.push(`/admin/${this.modelName}/`);
-                }
             });
+
+            this.$router.push(`/admin/${this.modelName}/${respData.id}`);
         },
 
         successRedirect() {

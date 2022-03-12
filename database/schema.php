@@ -168,6 +168,75 @@ $database = env('DB_DATABASE');
 	\DB::select("ALTER TABLE files ADD COLUMN `deleted_at` datetime DEFAULT NULL");
 
 
+// Create table life_events
+\DB::select("CREATE TABLE IF NOT EXISTS `life_events` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `interaction_line` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `eval` text COLLATE utf8mb4_unicode_ci,
+  `chance` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+
+// Create/Update column life_events.id
+\Schema::hasColumn('life_events', 'id')?
+	\DB::select("ALTER TABLE life_events MODIFY COLUMN `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT"):
+	\DB::select("ALTER TABLE life_events ADD COLUMN `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT");
+
+
+// Create/Update column life_events.slug
+\Schema::hasColumn('life_events', 'slug')?
+	\DB::select("ALTER TABLE life_events MODIFY COLUMN `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL"):
+	\DB::select("ALTER TABLE life_events ADD COLUMN `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL");
+
+
+// Create/Update column life_events.name
+\Schema::hasColumn('life_events', 'name')?
+	\DB::select("ALTER TABLE life_events MODIFY COLUMN `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL"):
+	\DB::select("ALTER TABLE life_events ADD COLUMN `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL");
+
+
+// Create/Update column life_events.interaction_line
+\Schema::hasColumn('life_events', 'interaction_line')?
+	\DB::select("ALTER TABLE life_events MODIFY COLUMN `interaction_line` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL"):
+	\DB::select("ALTER TABLE life_events ADD COLUMN `interaction_line` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL");
+
+
+// Create/Update column life_events.eval
+\Schema::hasColumn('life_events', 'eval')?
+	\DB::select("ALTER TABLE life_events MODIFY COLUMN `eval` text COLLATE utf8mb4_unicode_ci"):
+	\DB::select("ALTER TABLE life_events ADD COLUMN `eval` text COLLATE utf8mb4_unicode_ci");
+
+
+// Create/Update column life_events.chance
+\Schema::hasColumn('life_events', 'chance')?
+	\DB::select("ALTER TABLE life_events MODIFY COLUMN `chance` int(11) DEFAULT NULL"):
+	\DB::select("ALTER TABLE life_events ADD COLUMN `chance` int(11) DEFAULT NULL");
+
+
+// Create/Update column life_events.created_at
+\Schema::hasColumn('life_events', 'created_at')?
+	\DB::select("ALTER TABLE life_events MODIFY COLUMN `created_at` datetime DEFAULT NULL"):
+	\DB::select("ALTER TABLE life_events ADD COLUMN `created_at` datetime DEFAULT NULL");
+
+
+// Create/Update column life_events.updated_at
+\Schema::hasColumn('life_events', 'updated_at')?
+	\DB::select("ALTER TABLE life_events MODIFY COLUMN `updated_at` datetime DEFAULT NULL"):
+	\DB::select("ALTER TABLE life_events ADD COLUMN `updated_at` datetime DEFAULT NULL");
+
+
+// Create/Update column life_events.deleted_at
+\Schema::hasColumn('life_events', 'deleted_at')?
+	\DB::select("ALTER TABLE life_events MODIFY COLUMN `deleted_at` datetime DEFAULT NULL"):
+	\DB::select("ALTER TABLE life_events ADD COLUMN `deleted_at` datetime DEFAULT NULL");
+
+
 // Create table life_persons
 \DB::select("CREATE TABLE IF NOT EXISTS `life_persons` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,

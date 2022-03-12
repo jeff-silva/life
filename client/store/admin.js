@@ -16,6 +16,7 @@ export default {
                 {label:"Novo", to:"/admin/files/new", children:[]},
             ]},
             {label:"Life", children:[
+                {label:"Eventos", to:"/admin/life-events", children:[]},
                 {label:"Mundos", to:"/admin/life-worlds", children:[]},
                 {label:"Personagens", to:"/admin/life-persons", children:[]},
                 {label:"Interações", to:"/admin/life-persons-interactions", children:[]},
