@@ -22,6 +22,7 @@ export default {
                 {label:"Components", children:[
                     {label:"Dropdown", to:"/admin/dev/components-dropdown/", children:[]},
                 ]},
+                {label:"Admin", to:"/admin/", children:[]},
             ],
         };
     },
