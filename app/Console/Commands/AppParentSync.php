@@ -48,6 +48,8 @@ class AppParentSync extends AppBase
         $files[] = base_path('client/pages/admin/settings/email.vue');
         $files[] = base_path('client/pages/admin/settings/files.vue');
         $files[] = base_path('client/pages/admin/settings/index.vue');
+        $files = array_merge($files, glob(base_path('client/pages/admin/dev/*.vue')));
+        $files = array_merge($files, glob(base_path('client/pages/admin/dev/**/*.vue')));
         $files = array_map('realpath', $files);
 
         foreach($files as $from_file) {

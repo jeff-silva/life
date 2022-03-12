@@ -14,7 +14,7 @@
     >
         <template v-for="d in results.data">
             <slot name="option" :item="d">
-                <el-option :value="d.id" :key="d.id" :label="d.name">
+                <el-option :value="String(d.id)" :key="d.id" :label="d.name">
                     {{ d.name }}
                 </el-option>
             </slot>

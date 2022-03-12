@@ -20,6 +20,7 @@ class LifePersons extends \Illuminate\Database\Eloquent\Model
 		'age',
 		'father_id',
 		'mother_id',
+		'world_id',
 		'created_at',
 		'updated_at',
 		'deleted_at',
@@ -79,5 +80,17 @@ class LifePersons extends \Illuminate\Database\Eloquent\Model
 	public function mothers()
 	{
 		return $this->hasMany(LifePersons::class, 'id', 'mother_id');
+	}
+
+
+	public function world()
+	{
+		return $this->hasOne(LifeWorlds::class, 'id', 'world_id');
+	}
+
+
+	public function worlds()
+	{
+		return $this->hasMany(LifeWorlds::class, 'id', 'world_id');
 	}
 }

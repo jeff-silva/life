@@ -24,6 +24,9 @@ export default {
             navItems: [
                 {label:"Home", to:"/dev/", children:[]},
                 {label:"Endpoints", to:"/dev/endpoints/", children:[]},
+                {label:"Components", children:[
+                    {label:"Dropdown", to:"/dev/components-dropdown/", children:[]},
+                ]},
             ],
         };
     },

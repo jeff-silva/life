@@ -6,14 +6,16 @@ class Life {
 
     static function cycle()
     {
-        $persons = \App\Models\LifePersons::whereNull('is_dead')->get();
+        $persons = \App\Models\LifePersons::all();
+        $persons = \App\Utils\Life\Event::traverse($persons);
         
-        $return['lifePersonsMinimalCreate'] = self::lifePersonsMinimalCreate();
-        $return['lifePersonsFix'] = self::lifePersonsFix($persons);
-        $return['lifePersonsGrow'] = self::lifePersonsGrow($persons);
-        $return['lifePersonsRandomInteraction'] = self::lifePersonsRandomInteraction($persons);
+        // dump($persons);
 
-        return $return;
+        // $return['lifePersonsMinimalCreate'] = self::lifePersonsMinimalCreate();
+        // $return['lifePersonsFix'] = self::lifePersonsFix($persons);
+        // $return['lifePersonsGrow'] = self::lifePersonsGrow($persons);
+        // $return['lifePersonsRandomInteraction'] = self::lifePersonsRandomInteraction($persons);
+        // return $return;
     }
 
     static function test()

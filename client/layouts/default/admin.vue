@@ -12,7 +12,7 @@
             </template>
 
             <template #nav-body>
-                <ui-nav :items="navItems" @select="$refs.app.drawerClose()"></ui-nav>
+                <ui-nav :items="$store.state.admin.menu" @select="$refs.app.drawerClose()"></ui-nav>
             </template>
 
             <template #header>
@@ -34,33 +34,3 @@
         </ui-app>
     </div>
 </template>
-
-<script>
-export default {
-    data() {
-        return {
-            navItems: [
-                {label:"Dashboard", to:"/admin"},
-                // {label:"Páginas", children:[
-                //     {label:"Buscar", to:"/admin/pages", children:[]},
-                //     {label:"Novo", to:"/admin/pages/new", children:[]},
-                // ]},
-                {label:"Usuários", children:[
-                    {label:"Buscar", to:"/admin/user", children:[]},
-                    {label:"Novo", to:"/admin/user/new", children:[]},
-                ]},
-                {label:"Configurações", to:"/admin/settings", children:[]},
-                {label:"Arquivos", children:[
-                    {label:"Buscar", to:"/admin/files", children:[]},
-                    {label:"Novo", to:"/admin/files/new", children:[]},
-                ]},
-                {label:"Life", children:[
-                    {label:"Personagens", to:"/admin/life-persons", children:[]},
-                    {label:"Interações", to:"/admin/life-persons-interactions", children:[]},
-                ]},
-                {label:"Meus dados", to:"/admin/user/me"},
-            ],
-        };
-    },
-}
-</script>

@@ -35,19 +35,19 @@
                             </a>
                         </transition>
         
-                        <el-dropdown trigger="click">
+                        <ui-dropdown position="bottom-right">
                             <a href="javascript:;" class="btn btn-outline-success">
                                 <i class="fas fa-download me-1"></i> Exportar
                             </a>
         
-                            <el-dropdown-menu>
-                                <div style="width:150px;">
-                                    <a href="javascript:;" class="d-block p-2" @click="downloadExport('csv')">CSV</a>
-                                    <a href="javascript:;" class="d-block p-2" @click="downloadExport('json')">JSON</a>
-                                    <a href="javascript:;" class="d-block p-2" @click="downloadExport('html')">HTML</a>
+                            <template #dropdown>
+                                <div class="p-1">
+                                    <button type="button" class="btn w-100 mb-1" @click="downloadExport('csv')">CSV</button>
+                                    <button type="button" class="btn w-100 mb-1" @click="downloadExport('json')">JSON</button>
+                                    <button type="button" class="btn w-100 mb-0" @click="downloadExport('html')">HTML</button>
                                 </div>
-                            </el-dropdown-menu>
-                        </el-dropdown>
+                            </template>
+                        </ui-dropdown>
         
                         <nuxt-link :to="`/admin/${modelName}/new`" class="btn btn-outline-primary" v-if="actionsDefault">
                             <i class="fas fa-fw fa-plus me-1"></i> Novo
@@ -58,36 +58,38 @@
             </div>
     
             <div class="col-12 col-md-3">
-                <ui-mobile-action :slot-button="false" ref="searchForm">
-                    
-                    <div class="ui-model-search-search-fields mb-4">
-                        <div class="input-group form-control p-0">
-                            <input type="text" class="form-control border-0 bg-transparent" :placeholder="`Buscar ${plural}`" v-model="searchParams.q">
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn border-0 bg-transparent shadow-none" v-loading="loading">
-                                    <i class="fas fa-fw fa-search"></i>
-                                </button>
+                <div class="bg-white p-2 shadow-sm">
+                    <ui-mobile-action :slot-button="false" ref="searchForm">
+                        
+                        <div class="ui-model-search-search-fields mb-4">
+                            <div class="input-group form-control p-0">
+                                <input type="text" class="form-control border-0 bg-transparent" :placeholder="`Buscar ${plural}`" v-model="searchParams.q">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn border-0 bg-transparent shadow-none" v-loading="loading">
+                                        <i class="fas fa-fw fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-    
-                        <select class="form-control" v-model="searchParams.deleted" @change="submit()">
-                            <option value="">Ativos</option>
-                            <option value="1">Deletados</option>
-                        </select>
-    
-                        <slot name="search-fields"></slot>
-                    </div>
         
-                    <button type="submit" class="btn btn-primary shadow-none w-100" v-loading="loading">
-                        <i class="fas fa-fw fa-search"></i> Buscar
-                    </button>
-    
-                    <button type="button" class="btn shadow-none w-100 mt-2" @click="searchParams=searchParamsDefault(); submit().then(resp => searchParamsUrl())">
-                        <i class="fas fa-fw fa-times"></i> Limpar
-                    </button>
-    
-                    <slot name="search-actions"></slot>
-                </ui-mobile-action>
+                            <select class="form-control" v-model="searchParams.deleted" @change="submit()">
+                                <option value="">Ativos</option>
+                                <option value="1">Deletados</option>
+                            </select>
+        
+                            <slot name="search-fields"></slot>
+                        </div>
+            
+                        <button type="submit" class="btn btn-primary shadow-none w-100" v-loading="loading">
+                            <i class="fas fa-fw fa-search"></i> Buscar
+                        </button>
+        
+                        <button type="button" class="btn shadow-none w-100 mt-2" @click="searchParams=searchParamsDefault(); submit().then(resp => searchParamsUrl())">
+                            <i class="fas fa-fw fa-times"></i> Limpar
+                        </button>
+        
+                        <slot name="search-actions"></slot>
+                    </ui-mobile-action>
+                </div>
             </div>
     
             <div class="col-12 col-md-9 pt-3 pt-md-0 ps-md-3">
@@ -101,7 +103,7 @@
                                 <slot name="table-header">
                                     <th>-</th>
                                 </slot>
-                                <th></th>
+                                <th width="10px"></th>
                             </tr>
                         </thead>
                         
@@ -125,28 +127,32 @@
                                     <td>{{ i }}</td>
                                 </slot>
     
-                                <td class="text-end">
-                                    <ui-mobile-action>
-                                        <div class="ui-model-search-table-actions">
-                                            <div class="ui-model-search-table-actions-content">
+                                <td>
+                                    <ui-dropdown position="left">
+                                        <button type="button" class="btn btn-light" style="border-radius:50%;">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+
+                                        <template #dropdown>
+                                            <div class="ui-model-search-table-actions p-2">
                                                 <slot name="table-actions" :item="i"></slot>
-                                                
+                                                        
                                                 <slot name="table-actions-default" :item="i">
                                                     <nuxt-link :to="`/admin/${modelName}/${i.id}`" class="btn btn-primary" v-if="actionsDefault">
-                                                        <i class="fas fa-fw fa-pen"></i>
+                                                        <i class="fas fa-fw fa-pen"></i> Editar
                                                     </nuxt-link>
-        
+    
                                                     <button type="button" class="btn btn-success" @click="modelRestore(i.id)" v-if="actionsDefault && i.deleted_at">
-                                                        <i class="fas fa-fw fa-undo"></i>
+                                                        <i class="fas fa-fw fa-undo"></i> Restaurar
                                                     </button>
                     
                                                     <button type="button" class="btn btn-danger" @click="modelDelete(i.id)" v-if="actionsDefault && !i.deleted_at">
-                                                        <i class="fas fa-fw fa-times"></i>
+                                                        <i class="fas fa-fw fa-times"></i> Deletar
                                                     </button>
                                                 </slot>
                                             </div>
-                                        </div>
-                                    </ui-mobile-action>
+                                        </template>
+                                    </ui-dropdown>
                                 </td>
                             </tr>
                         </tbody>
@@ -296,43 +302,6 @@ export default {
 </script>
 
 <style>
-/* Mobile actions */
-@media (min-width: 0) and (max-width: 768px) {
-    .ui-model-search-table-actions-content .btn {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-}
-
-/* Desktop actions */
-@media (min-width: 768px) {
-    .ui-model-search-table-actions {
-        position: relative;
-        transition: all 300ms ease;
-        visibility: hidden;
-        opacity: 0;
-    }
-    
-    .ui-model-search tr:hover .ui-model-search-table-actions {
-        visibility: visible;
-        opacity: 1;
-    }
-    
-    .ui-model-search-table-actions-content {
-        position: absolute;
-        top: -22px;
-        right: 0;
-        white-space: nowrap;
-    }
-
-    .ui-model-search-table-actions-content .btn {
-        padding: 6px 8px;
-        border-radius: 50%;
-        margin-left: 5px;
-    }
-}
-
-
 .ui-model-search-search-fields > * {
     margin-bottom: 15px;
 }
@@ -340,4 +309,17 @@ export default {
 .ui-model-search [data-orderby] {cursor:pointer;}
 .ui-model-search [data-order="asc"]:after {content: "↓"; float: right;}
 .ui-model-search [data-order="desc"]:after {content: "↑"; float: right;}
+
+.ui-model-search-table-actions {
+    width: 150px;
+}
+
+.ui-model-search-table-actions > * {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.ui-model-search-table-actions > *:last-child {
+    margin-bottom: 0;
+}
 </style>

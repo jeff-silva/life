@@ -180,14 +180,17 @@ $database = env('DB_DATABASE');
   `age` decimal(10,2) DEFAULT NULL,
   `father_id` bigint(20) unsigned DEFAULT NULL,
   `mother_id` bigint(20) unsigned DEFAULT NULL,
+  `world_id` bigint(20) unsigned DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_life_persons_life_persons` (`father_id`),
   KEY `FK_life_persons_life_persons_2` (`mother_id`),
+  KEY `FK_life_persons_life_worlds` (`world_id`),
   CONSTRAINT `FK_life_persons_life_persons` FOREIGN KEY (`father_id`) REFERENCES `life_persons` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
-  CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL
+  CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,
+  CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
 
 
@@ -205,7 +208,13 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -223,7 +232,13 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -241,7 +256,13 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -259,7 +280,13 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -277,7 +304,13 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -295,7 +328,13 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -313,7 +352,13 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -331,7 +376,13 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -349,7 +400,13 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -367,7 +424,37 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
+}
+
+
+// Create/Update column life_persons.world_id
+\Schema::hasColumn('life_persons', 'world_id')?
+	\DB::select("ALTER TABLE life_persons MODIFY COLUMN `world_id` bigint(20) unsigned DEFAULT NULL"):
+	\DB::select("ALTER TABLE life_persons ADD COLUMN `world_id` bigint(20) unsigned DEFAULT NULL");
+
+
+// Create fk FK_life_persons_life_persons
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons` FOREIGN KEY (`father_id`) REFERENCES `life_persons` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_persons_2
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -385,7 +472,13 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -403,7 +496,13 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -421,7 +520,13 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 
 // Create fk FK_life_persons_life_persons_2
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_persons_2'"))->first()) {
-	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL");
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,");
+}
+
+
+// Create fk FK_life_persons_life_worlds
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_life_worlds'"))->first()) {
+	\DB::select("ALTER TABLE `life_persons` ADD CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
 
 
@@ -585,6 +690,61 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_life_persons_interactions_life_persons_2'"))->first()) {
 	\DB::select("ALTER TABLE `life_persons_interactions` ADD CONSTRAINT `FK_life_persons_interactions_life_persons_2` FOREIGN KEY (`person_to`) REFERENCES `life_persons` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
+
+
+// Create table life_worlds
+\DB::select("CREATE TABLE IF NOT EXISTS `life_worlds` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `year_seconds` bigint(20) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+
+// Create/Update column life_worlds.id
+\Schema::hasColumn('life_worlds', 'id')?
+	\DB::select("ALTER TABLE life_worlds MODIFY COLUMN `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT"):
+	\DB::select("ALTER TABLE life_worlds ADD COLUMN `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT");
+
+
+// Create/Update column life_worlds.slug
+\Schema::hasColumn('life_worlds', 'slug')?
+	\DB::select("ALTER TABLE life_worlds MODIFY COLUMN `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL"):
+	\DB::select("ALTER TABLE life_worlds ADD COLUMN `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL");
+
+
+// Create/Update column life_worlds.name
+\Schema::hasColumn('life_worlds', 'name')?
+	\DB::select("ALTER TABLE life_worlds MODIFY COLUMN `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL"):
+	\DB::select("ALTER TABLE life_worlds ADD COLUMN `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL");
+
+
+// Create/Update column life_worlds.year_seconds
+\Schema::hasColumn('life_worlds', 'year_seconds')?
+	\DB::select("ALTER TABLE life_worlds MODIFY COLUMN `year_seconds` bigint(20) DEFAULT NULL"):
+	\DB::select("ALTER TABLE life_worlds ADD COLUMN `year_seconds` bigint(20) DEFAULT NULL");
+
+
+// Create/Update column life_worlds.created_at
+\Schema::hasColumn('life_worlds', 'created_at')?
+	\DB::select("ALTER TABLE life_worlds MODIFY COLUMN `created_at` datetime DEFAULT NULL"):
+	\DB::select("ALTER TABLE life_worlds ADD COLUMN `created_at` datetime DEFAULT NULL");
+
+
+// Create/Update column life_worlds.updated_at
+\Schema::hasColumn('life_worlds', 'updated_at')?
+	\DB::select("ALTER TABLE life_worlds MODIFY COLUMN `updated_at` datetime DEFAULT NULL"):
+	\DB::select("ALTER TABLE life_worlds ADD COLUMN `updated_at` datetime DEFAULT NULL");
+
+
+// Create/Update column life_worlds.deleted_at
+\Schema::hasColumn('life_worlds', 'deleted_at')?
+	\DB::select("ALTER TABLE life_worlds MODIFY COLUMN `deleted_at` datetime DEFAULT NULL"):
+	\DB::select("ALTER TABLE life_worlds ADD COLUMN `deleted_at` datetime DEFAULT NULL");
 
 
 // Create table migrations

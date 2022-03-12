@@ -134,6 +134,51 @@
     'route' => 'life-persons-interactions/export',
     'call' => '\\App\\Http\\Controllers\\LifePersonsInteractionsController@export',
   ],
+  'life-worlds-search' => [
+    'route' => 'life-worlds/search',
+    'call' => '\\App\\Http\\Controllers\\LifeWorldsController@search',
+    'method' => 'get',
+  ],
+  'life-worlds-find' => [
+    'method' => 'get',
+    'route' => 'life-worlds/find/{id}',
+    'call' => '\\App\\Http\\Controllers\\LifeWorldsController@find',
+  ],
+  'life-worlds-save' => [
+    'method' => 'post',
+    'route' => 'life-worlds/save',
+    'call' => '\\App\\Http\\Controllers\\LifeWorldsController@save',
+  ],
+  'life-worlds-valid' => [
+    'method' => 'post',
+    'route' => 'life-worlds/valid',
+    'call' => '\\App\\Http\\Controllers\\LifeWorldsController@valid',
+  ],
+  'life-worlds-delete' => [
+    'method' => 'post',
+    'route' => 'life-worlds/delete',
+    'call' => '\\App\\Http\\Controllers\\LifeWorldsController@delete',
+  ],
+  'life-worlds-restore' => [
+    'method' => 'post',
+    'route' => 'life-worlds/restore',
+    'call' => '\\App\\Http\\Controllers\\LifeWorldsController@restore',
+  ],
+  'life-worlds-clone' => [
+    'method' => 'get',
+    'route' => 'life-worlds/clone/{id}',
+    'call' => '\\App\\Http\\Controllers\\LifeWorldsController@clone',
+  ],
+  'life-worlds-import' => [
+    'method' => 'post',
+    'route' => 'life-worlds/import',
+    'call' => '\\App\\Http\\Controllers\\LifeWorldsController@import',
+  ],
+  'life-worlds-export' => [
+    'method' => 'get',
+    'route' => 'life-worlds/export',
+    'call' => '\\App\\Http\\Controllers\\LifeWorldsController@export',
+  ],
   'pages-search' => [
     'route' => 'pages/search',
     'call' => '\\App\\Http\\Controllers\\PagesController@search',

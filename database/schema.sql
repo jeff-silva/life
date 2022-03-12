@@ -46,14 +46,17 @@ CREATE TABLE IF NOT EXISTS `life_persons` (
   `age` decimal(10,2) DEFAULT NULL,
   `father_id` bigint(20) unsigned DEFAULT NULL,
   `mother_id` bigint(20) unsigned DEFAULT NULL,
+  `world_id` bigint(20) unsigned DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_life_persons_life_persons` (`father_id`),
   KEY `FK_life_persons_life_persons_2` (`mother_id`),
+  KEY `FK_life_persons_life_worlds` (`world_id`),
   CONSTRAINT `FK_life_persons_life_persons` FOREIGN KEY (`father_id`) REFERENCES `life_persons` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
-  CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL
+  CONSTRAINT `FK_life_persons_life_persons_2` FOREIGN KEY (`mother_id`) REFERENCES `life_persons` (`id`) ON DELETE CASCADE ON UPDATE SET NULL,
+  CONSTRAINT `FK_life_persons_life_worlds` FOREIGN KEY (`world_id`) REFERENCES `life_worlds` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 
 
@@ -72,6 +75,18 @@ CREATE TABLE IF NOT EXISTS `life_persons_interactions` (
   CONSTRAINT `FK_life_persons_interactions_life_persons` FOREIGN KEY (`person_from`) REFERENCES `life_persons` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
   CONSTRAINT `FK_life_persons_interactions_life_persons_2` FOREIGN KEY (`person_to`) REFERENCES `life_persons` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+
+
+CREATE TABLE IF NOT EXISTS `life_worlds` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `year_seconds` bigint(20) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 
 CREATE TABLE IF NOT EXISTS `migrations` (

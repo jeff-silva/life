@@ -21,6 +21,10 @@
 		<ui-field label="Mãe" :error="errorFields.mother_id">
 			<ui-model-select model-name="life-persons" v-model.numeric="value.mother_id"></ui-model-select>
 		</ui-field>
+		
+		<ui-field label="Mundo" :error="errorFields.world_id">
+			<ui-model-select model-name="life-worlds" v-model.numeric="value.world_id"></ui-model-select>
+		</ui-field>
 
 		<pre>{{ value }}</pre>
 	</ui-model-edit>
