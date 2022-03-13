@@ -51,7 +51,7 @@ let helper = {
         return bytes.toFixed(dp) + ' ' + units[u];
     },
 
-    numberFormat(number, dec=',', mil='.', decimals=2) {
+    numberFormat(number, decimals=2, dec=',', mil='.') {
         number = parseFloat(number);
         number = isNaN(number)? 0: number;
 

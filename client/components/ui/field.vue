@@ -2,6 +2,12 @@
     <div class="ui-field mb-3" :class="{'d-flex':isLarge, 'ui-field-error':_compError}">
         <div :class="{'py-2':isLarge, 'pb-1':!isLarge}" :style="`min-width:${isLarge? null: labelWidth}; max-width:${isLarge? null: labelWidth};`">
             <slot name="label">{{ label }}</slot>
+            
+            <small class="d-block text-muted">
+                <slot name="info">
+                    <span v-html="info"></span>
+                </slot>
+            </small>
         </div>
 
         <div :class="{'flex-grow-1':isLarge}">
@@ -16,6 +22,7 @@ export default {
     props: {
         label: {default:''},
         labelWidth: {default:'200px'},
+        info: {default:''},
         error: [Boolean, Number, String, Array, Object],
         widthBreakpoint: {default:600},
     },

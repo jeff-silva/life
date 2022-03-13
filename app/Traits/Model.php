@@ -38,8 +38,19 @@ trait Model
     }
 
 
-    public function clone() {
-        // 
+    public function clone($id, $data=[]) {
+        $model = self::find($id);
+        if (!$model) {
+            throw new \Exception('Model does not exists');
+        }
+
+        $new = $model->replicate()->fill(request()->all());
+        $new->slug = null;
+        $new->created_at = $new->updated_at = date('Y-m-d H:i:s');
+        $new->deleted_at = null;
+        $new->save();
+
+        return $new;
     }
 
 

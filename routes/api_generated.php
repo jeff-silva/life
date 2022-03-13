@@ -30,7 +30,7 @@
     'call' => '\\App\\Http\\Controllers\\FilesController@restore',
   ],
   'files-clone' => [
-    'method' => 'get',
+    'method' => 'post',
     'route' => 'files/clone/{id}',
     'call' => '\\App\\Http\\Controllers\\FilesController@clone',
   ],
@@ -75,7 +75,7 @@
     'call' => '\\App\\Http\\Controllers\\LifeEventsController@restore',
   ],
   'life-events-clone' => [
-    'method' => 'get',
+    'method' => 'post',
     'route' => 'life-events/clone/{id}',
     'call' => '\\App\\Http\\Controllers\\LifeEventsController@clone',
   ],
@@ -120,7 +120,7 @@
     'call' => '\\App\\Http\\Controllers\\LifePersonsController@restore',
   ],
   'life-persons-clone' => [
-    'method' => 'get',
+    'method' => 'post',
     'route' => 'life-persons/clone/{id}',
     'call' => '\\App\\Http\\Controllers\\LifePersonsController@clone',
   ],
@@ -165,7 +165,7 @@
     'call' => '\\App\\Http\\Controllers\\LifePersonsInteractionsController@restore',
   ],
   'life-persons-interactions-clone' => [
-    'method' => 'get',
+    'method' => 'post',
     'route' => 'life-persons-interactions/clone/{id}',
     'call' => '\\App\\Http\\Controllers\\LifePersonsInteractionsController@clone',
   ],
@@ -210,7 +210,7 @@
     'call' => '\\App\\Http\\Controllers\\LifeWorldsController@restore',
   ],
   'life-worlds-clone' => [
-    'method' => 'get',
+    'method' => 'post',
     'route' => 'life-worlds/clone/{id}',
     'call' => '\\App\\Http\\Controllers\\LifeWorldsController@clone',
   ],
@@ -255,7 +255,7 @@
     'call' => '\\App\\Http\\Controllers\\PagesController@restore',
   ],
   'pages-clone' => [
-    'method' => 'get',
+    'method' => 'post',
     'route' => 'pages/clone/{id}',
     'call' => '\\App\\Http\\Controllers\\PagesController@clone',
   ],
@@ -300,7 +300,7 @@
     'call' => '\\App\\Http\\Controllers\\SettingsController@restore',
   ],
   'settings-clone' => [
-    'method' => 'get',
+    'method' => 'post',
     'route' => 'settings/clone/{id}',
     'call' => '\\App\\Http\\Controllers\\SettingsController@clone',
   ],
@@ -345,7 +345,7 @@
     'call' => '\\App\\Http\\Controllers\\UserController@restore',
   ],
   'user-clone' => [
-    'method' => 'get',
+    'method' => 'post',
     'route' => 'user/clone/{id}',
     'call' => '\\App\\Http\\Controllers\\UserController@clone',
   ],

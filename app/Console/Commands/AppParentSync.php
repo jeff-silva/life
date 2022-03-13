@@ -42,6 +42,8 @@ class AppParentSync extends AppBase
         $files[] = base_path('database/migrations/2022_01_01_000000_create_files_table.php');
         $files[] = base_path('database/migrations/2022_01_01_000000_create_pages_table.php');
         $files[] = base_path('database/migrations/2022_01_01_000000_create_settings_table.php');
+        $files[] = base_path('client/app.js');
+        $files[] = base_path('client/app.css');
         $files = array_merge($files, glob(base_path('client/components/ui/**/*.vue')));
         $files = array_merge($files, glob(base_path('client/components/ui/*.vue')));
         $files = array_merge($files, glob(base_path('client/layouts/default/*.vue')));

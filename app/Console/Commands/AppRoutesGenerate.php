@@ -56,7 +56,7 @@ class AppRoutesGenerate extends AppBase
             ];
 
             $routes["{$slug}-clone"] = [
-                'method' => 'get',
+                'method' => 'post',
                 'route' => "{$slug}/clone/{id}",
                 'call' => "\App\Http\Controllers\\{$model_name}@clone"
             ];

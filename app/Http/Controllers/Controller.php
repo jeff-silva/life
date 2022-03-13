@@ -65,7 +65,7 @@ class Controller extends BaseController
 
     public function clone($id)
     {
-        return ['clone'];
+        return $this->model->clone($id, request()->all());
     }
 
 

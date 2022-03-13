@@ -138,15 +138,19 @@
                                                 <slot name="table-actions" :item="i"></slot>
                                                         
                                                 <slot name="table-actions-default" :item="i">
-                                                    <nuxt-link :to="`/admin/${modelName}/${i.id}`" class="btn btn-primary" v-if="actionsDefault">
+                                                    <nuxt-link :to="`/admin/${modelName}/${i.id}`" class="btn btn-primary" v-if="tableActions && tableActionEdit">
                                                         <i class="fas fa-fw fa-pen"></i> Editar
                                                     </nuxt-link>
+                                                    
+                                                    <button type="button" class="btn btn-light" @click="modelClone(i)" v-if="tableActions && tableActionClone">
+                                                        <i class="fas fa-fw fa-copy"></i> Clonar
+                                                    </button>
     
-                                                    <button type="button" class="btn btn-success" @click="modelRestore(i.id)" v-if="actionsDefault && i.deleted_at">
+                                                    <button type="button" class="btn btn-success" @click="modelRestore(i.id)" v-if="tableActions && i.deleted_at">
                                                         <i class="fas fa-fw fa-undo"></i> Restaurar
                                                     </button>
                     
-                                                    <button type="button" class="btn btn-danger" @click="modelDelete(i.id)" v-if="actionsDefault && !i.deleted_at">
+                                                    <button type="button" class="btn btn-danger" @click="modelDelete(i.id)" v-if="tableActionDelete && !i.deleted_at">
                                                         <i class="fas fa-fw fa-times"></i> Deletar
                                                     </button>
                                                 </slot>
@@ -187,6 +191,10 @@ export default {
         plural: {default:"Itens"},
         changeUrl: {default:true},
         actionsDefault: {default:true},
+        tableActions: {default:true},
+        tableActionEdit: {default:true},
+        tableActionClone: {default:true},
+        tableActionDelete: {default:true},
     },
 
     data() {
@@ -281,6 +289,14 @@ export default {
             this.$confirm(confirmText).then(resp => {
                 this.$axios.post(`/api/${this.modelName}/delete`, {id, deleted, forced}).then(resp => {
                     this.selecteds = [];
+                    this.submit();
+                });
+            });
+        },
+
+        modelClone(model) {
+            this.$confirm(`Clonar ${model.name}?`).then(resp => {
+                this.$axios.post(`/api/${this.modelName}/clone/${model.id}`, {name:`${model.name} #${model.id} clone`}).then(resp => {
                     this.submit();
                 });
             });
