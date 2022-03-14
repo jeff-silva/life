@@ -39,7 +39,7 @@
 					Testar
 				</button>
 			</div>
-			<pre class="mt-1">{{ testResp }}</pre>
+			<pre class="mt-2 bg-light p-3 shadow-sm" v-if="testResp">{{ testResp }}</pre>
 		</ui-field>
 	</ui-model-edit>
 </template>
