@@ -12,4 +12,16 @@ class LifeEventsController extends Controller
 			'except' => ['search', 'find'],
 		]);
 	}
+
+	
+	public function test($id)
+	{
+		if ($event = \App\Models\LifeEvents::find($id)) {
+			$person_from = \App\Models\LifePersons::inRandomOrder()->first();
+			$person_to = \App\Models\LifePersons::inRandomOrder()->first();
+			return $event->run($person_from, $person_to);
+		}
+
+		return false;
+	}
 }

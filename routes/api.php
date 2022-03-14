@@ -31,9 +31,10 @@ Route::post('app/mail-test', '\App\Http\Controllers\AppController@mailTest');
 Route::get('settings', '\App\Http\Controllers\SettingsController@getAll');
 Route::post('settings', '\App\Http\Controllers\SettingsController@saveAll');
 
-// \App\Http\Controllers\Controller::automaticRoutes(\App\Models\Files::class);
 Route::post('files/upload', '\App\Http\Controllers\FilesController@upload');
 Route::get('files/view/{slug}', '\App\Http\Controllers\FilesController@view');
+
+Route::get('life-events/test/{id}', '\App\Http\Controllers\LifeEventsController@test');
 
 $routes = include __DIR__ . '/api_generated.php';
 foreach($routes as $route_name => $route) {

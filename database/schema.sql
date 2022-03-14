@@ -37,10 +37,10 @@ CREATE TABLE IF NOT EXISTS `files` (
 
 CREATE TABLE IF NOT EXISTS `life_events` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `text_success` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `text_error` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `text_success` text COLLATE utf8mb4_unicode_ci,
+  `text_error` text COLLATE utf8mb4_unicode_ci,
   `eval` text COLLATE utf8mb4_unicode_ci,
   `chance` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,

@@ -9,6 +9,10 @@
 		<ui-field label="Nome" :error="errorFields.name">
 			<input type="text" class="form-control" v-model="value.name">
 		</ui-field>
+
+		<ui-field label="Tipo (slug)" :error="errorFields.slug">
+			<input type="text" class="form-control" v-model="value.slug">
+		</ui-field>
 		
 		<ui-field label="Texto sucesso interação" :error="errorFields.text_success">
 			<template #info>Um texto por linha. O texto será escolhido aleatoriamente.</template>
@@ -30,6 +34,12 @@
 		
 		<ui-field label="Código" :error="errorFields.eval">
 			<ui-code v-model="value.eval" language="php"></ui-code>
+			<div class="text-end mt-1">
+				<button type="button" class="btn btn-primary" @click="lifeEventsTest()">
+					Testar
+				</button>
+			</div>
+			<pre class="mt-1">{{ testResp }}</pre>
 		</ui-field>
 	</ui-model-edit>
 </template>
@@ -43,6 +53,21 @@ export default {
 		return {
 			title: "Editar",
 		};
+	},
+
+	data() {
+		return {
+			testResp: false,
+		};
+	},
+
+	methods: {
+		lifeEventsTest() {
+			if (!+this.$route.params.id) return;
+			this.$axios.get(`/api/life-events/test/${this.$route.params.id}`).then(resp => {
+				this.testResp = resp.data;
+			});
+		},
 	},
 }
 </script>

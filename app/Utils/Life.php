@@ -8,12 +8,15 @@ class Life {
     {
         $persons = \App\Models\LifePersons::all();
         $events = \App\Models\LifeEvents::all();
+        $return = [];
 
         foreach($persons as $person_from) {
             $person_to = $persons->random();
             $event = $events->random();
-            $event->run($person_from, $person_to);
+            $return[] = $event->run($person_from, $person_to);
         }
+
+        return $return;
 
         // $persons = \App\Utils\Life\Event::traverse($persons);
         

@@ -38,25 +38,20 @@ export default {
         monacoInit() {
             setTimeout(() => {
                 let target = this.$refs.monaco;
-                if (! target) return;
+
                 this.monaco = monaco.editor.create(target, {
-                    value: this.props.value,
+                    value: (this.props.value || ""),
                     language: this.props.language,
                     theme: this.props.theme,
                     automaticLayout: true,
                 });
+
                 this.monaco.getModel().onDidChangeContent(evt => {
                     this.props.value = this.monaco.getModel().getValue();
-                    this.emitValue();
                 });
+
                 this.monaco.getModel().setValue(this.props.value);
             }, 100);
-        },
-
-        emitValue() {
-            this.$emit('value', this.props.value);
-            this.$emit('input', this.props.value);
-            this.$emit('change', this.props.value);
         },
 
         setValue(value) {
