@@ -7,7 +7,15 @@ class Life {
     static function cycle()
     {
         $persons = \App\Models\LifePersons::all();
-        $persons = \App\Utils\Life\Event::traverse($persons);
+        $events = \App\Models\LifeEvents::all();
+
+        foreach($persons as $person_from) {
+            $person_to = $persons->random();
+            $event = $events->random();
+            $event->run($person_from, $person_to);
+        }
+
+        // $persons = \App\Utils\Life\Event::traverse($persons);
         
         // dump($persons);
 

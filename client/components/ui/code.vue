@@ -21,9 +21,16 @@ export default {
 
     watch: {
         $props: {deep:true, handler(value) {
-            if (this.$el.contains(document.activeElement)) return;
+            if (this.__preventRecursive) return;
             this.props = JSON.parse(JSON.stringify(value));
-            this.setValue(this.props.value);
+            this.setValue(this.props.value||"");
+        }},
+
+        props: {deep:true, handler(value) {
+            this.__preventRecursive = true;
+            this.$emit('input', value.value||false);
+            for(let i in value) { this.$emit(`update:${i}`, value[i]); }
+            setTimeout(() => { this.__preventRecursive = false; }, 10);
         }},
     },
     

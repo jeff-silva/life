@@ -10,9 +10,14 @@
 			<input type="text" class="form-control" v-model="value.name">
 		</ui-field>
 		
-		<ui-field label="Texto interação" :error="errorFields.interaction_line">
+		<ui-field label="Texto sucesso interação" :error="errorFields.text_success">
 			<template #info>Um texto por linha. O texto será escolhido aleatoriamente.</template>
-			<textarea class="form-control" v-model="value.interaction_line"></textarea>
+			<textarea class="form-control" v-model="value.text_success"></textarea>
+		</ui-field>
+		
+		<ui-field label="Texto erro interação" :error="errorFields.text_error">
+			<template #info>Um texto por linha. O texto será escolhido aleatoriamente.</template>
+			<textarea class="form-control" v-model="value.text_error"></textarea>
 		</ui-field>
 		
 		<ui-field label="Chance de erro" :error="errorFields.chance">
@@ -24,7 +29,7 @@
 		</ui-field>
 		
 		<ui-field label="Código" :error="errorFields.eval">
-			<ui-code v-model="value.eval"></ui-code>
+			<ui-code v-model="value.eval" language="php"></ui-code>
 		</ui-field>
 	</ui-model-edit>
 </template>

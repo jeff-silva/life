@@ -173,7 +173,8 @@ $database = env('DB_DATABASE');
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `interaction_line` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `text_success` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `text_error` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `eval` text COLLATE utf8mb4_unicode_ci,
   `chance` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -201,10 +202,16 @@ $database = env('DB_DATABASE');
 	\DB::select("ALTER TABLE life_events ADD COLUMN `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL");
 
 
-// Create/Update column life_events.interaction_line
-\Schema::hasColumn('life_events', 'interaction_line')?
-	\DB::select("ALTER TABLE life_events MODIFY COLUMN `interaction_line` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL"):
-	\DB::select("ALTER TABLE life_events ADD COLUMN `interaction_line` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL");
+// Create/Update column life_events.text_success
+\Schema::hasColumn('life_events', 'text_success')?
+	\DB::select("ALTER TABLE life_events MODIFY COLUMN `text_success` text COLLATE utf8mb4_unicode_ci NOT NULL"):
+	\DB::select("ALTER TABLE life_events ADD COLUMN `text_success` text COLLATE utf8mb4_unicode_ci NOT NULL");
+
+
+// Create/Update column life_events.text_error
+\Schema::hasColumn('life_events', 'text_error')?
+	\DB::select("ALTER TABLE life_events MODIFY COLUMN `text_error` text COLLATE utf8mb4_unicode_ci NOT NULL"):
+	\DB::select("ALTER TABLE life_events ADD COLUMN `text_error` text COLLATE utf8mb4_unicode_ci NOT NULL");
 
 
 // Create/Update column life_events.eval
