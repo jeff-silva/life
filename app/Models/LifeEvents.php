@@ -22,11 +22,12 @@ class LifeEvents extends \Illuminate\Database\Eloquent\Model
 		'deleted_at',
 	];
 
-	public function run($person_from, $person_to=null)
+
+	public function run($person_from, $person_to = null)
 	{
 		if (!$person_from) return;
 		if ($person_from==$person_to) return;
-		
+
 		$save = ['person_from'=>$person_from->id];
 
 		if ($person_to) {
@@ -41,6 +42,6 @@ class LifeEvents extends \Illuminate\Database\Eloquent\Model
 			$save['name'] = collect(explode("\n", $this->text_success))->random();
 		}
 
-		return \App\Models\LifePersonsInteractions::create($save);
+		return LifePersonsInteractions::create($save);
 	}
 }
