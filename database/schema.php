@@ -74,7 +74,7 @@ $database = env('DB_DATABASE');
   `mime` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ext` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_text` int(11) DEFAULT NULL,
+  `is_text` int(1) DEFAULT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `content` longtext COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -134,8 +134,8 @@ $database = env('DB_DATABASE');
 
 // Create/Update column files.is_text
 \Schema::hasColumn('files', 'is_text')?
-	\DB::select("ALTER TABLE files MODIFY COLUMN `is_text` int(11) DEFAULT NULL"):
-	\DB::select("ALTER TABLE files ADD COLUMN `is_text` int(11) DEFAULT NULL");
+	\DB::select("ALTER TABLE files MODIFY COLUMN `is_text` int(1) DEFAULT NULL"):
+	\DB::select("ALTER TABLE files ADD COLUMN `is_text` int(1) DEFAULT NULL");
 
 
 // Create/Update column files.url

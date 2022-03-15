@@ -5,35 +5,48 @@
         singular="Arquivo"
         plural="Arquivos"
         #default="{value, errorFields}"
-    >    
-        <template v-if="value.id">
-            <ui-field label="Nome" layout="horizontal" :error="errorFields.name">
-                <input type="text" class="form-control" v-model="value.name">
-            </ui-field>
+    >
+        <ui-field label="Nome" layout="horizontal" :error="errorFields.name">
+            <input type="text" class="form-control" v-model="value.name">
+        </ui-field>
     
-            <ui-field label="Pasta" layout="horizontal" :error="errorFields.folder">
-                <input type="text" class="form-control" v-model="value.folder">
-            </ui-field>
-            
-            <ui-field label="Arquivo" layout="horizontal">
-                <a :href="value.url" :download="value.slug" class="btn btn-light">
-                    Download <i class="fas fa-fw fa-download"></i>
-                </a>
-    
-                <div class="bg-light text-center py-3 mt-3" v-if="value.type=='image'">
-                    <img :src="value.url" alt="" style="max-width:400px; max-height:50vh; object-fit:cover;">
-                </div>
+        <ui-field label="Pasta" layout="horizontal" :error="errorFields.folder">
+            <input type="text" class="form-control" v-model="value.folder">
+        </ui-field>
+        
+        <ui-field label="Arquivo" layout="horizontal">
+            <!-- <ui-upload v-model="value.content" :url="value.url"></ui-upload> -->
+            <ui-upload-area v-model="value.content" :url="`${value.url}?r=${value.updated_at}`"></ui-upload-area>
+            <!-- <pre>value.content: {{ (value.content||'').length }}</pre> -->
+            <!-- <pre>value.content: {{ value.content }}</pre> -->
+            <pre>{{ `${value.url}?r=${value.updated_at}` }}</pre>
+        </ui-field>
 
-                <div class="mb-3"></div>
-                <ui-code v-model="value.content" :language="value.ext" style="height:400px;" v-if="value.is_text"></ui-code>
-            </ui-field>
-        </template>
+        <ui-modal :value="$route.query.contentEdit" width="90vw" v-if="value.type=='image'" @close="$router.push({query:{}})">
+            <template #header>Editar</template>
+            <template #body>
+                <ui-photopea v-model="value.content" :url="value.url" ref="photopea" style="height:70vh;"></ui-photopea>
+            </template>
+            <template #footer>
+                <ui-dropdown type="top-right">
+                    <button type="button" class="btn btn-success" @click="photopeaSave()">
+                        Salvar
+                    </button>
 
-        <template v-else>
-            <ui-field label="Upload de arquivo" layout="horizontal">
-                <ui-file-upload @success="$router.push(`/admin/files/${$event.id}`);"></ui-file-upload>
-            </ui-field>
-        </template>
+                    <template #dropdown>
+                        <div class="p-1" style="width:150px;">
+                            <button type="button" class="btn btn-primary w-100" @click="photopeaSave('jpg')">
+                                JPG
+                            </button>
+
+                            <button type="button" class="btn btn-primary w-100 mt-1" @click="photopeaSave('png')">
+                                PNG
+                            </button>
+                        </div>
+                    </template>
+                </ui-dropdown>
+            </template>
+        </ui-modal>
 
     </ui-model-edit>
 </template>
@@ -47,6 +60,15 @@ export default {
         return {
             title: "Editar arquivo",
         };
+    },
+
+    methods: {
+        photopeaSave(type="jpg") {
+            this.$refs.photopea.save(type);
+            setTimeout(() => {
+                this.$router.push({query:{}});
+            }, 100);
+        },
     },
 }
 </script>

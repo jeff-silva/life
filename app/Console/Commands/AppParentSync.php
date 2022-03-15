@@ -32,6 +32,9 @@ class AppParentSync extends AppBase
         $files[] = base_path('app/Console/Commands/AppRoutesGenerate.php');
         $files[] = base_path('app/Console/Commands/AppSync.php');
         $files[] = base_path('app/Console/Commands/AppTableGenerate.php');
+        $files[] = base_path('app/Models/Files.php');
+        $files[] = base_path('app/Models/Settings.php');
+        $files[] = base_path('app/Providers/AppServiceProvider.php');
         $files[] = base_path('app/Traits/Mail.php');
         $files[] = base_path('app/Traits/Model.php');
         $files = array_merge($files, glob(base_path('app/Mail/*.php')));
@@ -47,6 +50,7 @@ class AppParentSync extends AppBase
         $files = array_merge($files, glob(base_path('client/components/ui/**/*.vue')));
         $files = array_merge($files, glob(base_path('client/components/ui/*.vue')));
         $files = array_merge($files, glob(base_path('client/layouts/default/*.vue')));
+        $files = array_merge($files, glob(base_path('client/pages/admin/files/*.vue')));
         $files[] = base_path('client/pages/admin/settings/email.vue');
         $files[] = base_path('client/pages/admin/settings/files.vue');
         $files[] = base_path('client/pages/admin/settings/index.vue');

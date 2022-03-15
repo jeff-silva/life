@@ -2,7 +2,7 @@
     <div>
         <transition name="custom-unique-name" enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut">
             <div class="modal show" tabindex="-1" style="display:block; background:#00000044; animation-duration:200ms;" v-if="props.value" @click.self="props.value=false; emitValue();">
-                <div class="modal-dialog">
+                <div class="modal-dialog" :style="`max-width:${width}!important;`">
                     <div class="modal-content">
                         <div class="modal-header">
                             <slot name="header"></slot>
@@ -25,6 +25,7 @@
 export default {
     props: {
         value: [Boolean, String, Array, Object],
+        width: {default:"400px"},
     },
 
     watch: {
@@ -44,6 +45,13 @@ export default {
             this.$emit('value', this.props.value);
             this.$emit('input', this.props.value);
             this.$emit('change', this.props.value);
+
+            if (this.props.value) {
+                this.$emit('open', this.props.value);
+            }
+            else {
+                this.$emit('close', this.props.value);
+            }
         },
     },
 }

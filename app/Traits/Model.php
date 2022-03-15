@@ -12,9 +12,34 @@ trait Model
                 throw new \Exception(json_encode($validate->errors()));
             }
 
-            // Gerando slug caso coluna exista
-            if (in_array('slug', $model->getFillable()) AND !$model->slug) {
-                $model->slug = $model->slugify();
+            $storage_type = config('app_model_files.storage_type'); // database | file
+            foreach($model->attributes as $name=>$value) {
+
+                if ($file = request()->file($name)) {
+                    if ($storage_type=='database') {
+                        $type = preg_replace('/\/.+/', '', $file->getClientMimeType());
+                        $ext = $file->getClientOriginalExtension();
+                        $texts = ['svg', 'csv'];
+
+                        if ($type=='text' OR in_array($ext, $texts)) {
+                            $value = file_get_contents($file);
+                        }
+                        else {
+                            $value = 'data:'. $file->getClientMimeType() .';base64,'. base64_encode(file_get_contents($file));
+                        }
+                    }
+                    else if ($storage_type=='file') {
+                        $filename = \Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) .'.'. $file->getClientOriginalExtension();
+                        \Storage::disk('public')->put($filename, file_get_contents($file));
+                        $value = "/uploads/{$filename}";
+                    }
+                }
+
+                if (is_array($value)) {
+                    $value = json_encode($value);
+                }
+
+                $model->attributes[ $name ] = $value;
             }
 
             return $model;
@@ -27,14 +52,10 @@ trait Model
     }
     
 
-    public function validate($data=null) {
+    public function validate($data=null)
+    {
         $data = $data===null? $this->attributes: $data;
         return \Validator::make($data, $this->validationRules());
-    }
-
-
-    public function slugify() {
-        return \Str::slug($this->name);
     }
 
 
@@ -57,6 +78,21 @@ trait Model
     public function import($format, $content) {
         // 
     }
+
+
+    public function setSlugAttribute($value)
+    {
+        if (in_array('slug', $this->getFillable()) AND !$this->attributes['slug']) {
+            $this->attributes['slug'] = \Str::slug($this->name);
+        }
+    }
+
+
+    public function setDeletedAtAttribute($value)
+	{
+		$value = strtotime($value)? $value: null;
+        $this->attributes['deleted_at'] = $value;
+	}
 
 
     public function scopeFindIdOrSlug($query, $slugid)

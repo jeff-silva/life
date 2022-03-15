@@ -19,10 +19,6 @@
                     <div><small>{{ item.size|strFileSize }}</small></div>
                 </td>
             </template>
-
-            <template #header-actions>
-                <ui-file-upload @success="$refs.modelSearch.submit()"></ui-file-upload>
-            </template>
         </ui-model-search>
     </div>
 </template>

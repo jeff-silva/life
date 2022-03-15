@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `files` (
   `mime` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ext` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_text` int(11) DEFAULT NULL,
+  `is_text` int(1) DEFAULT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `content` longtext COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,

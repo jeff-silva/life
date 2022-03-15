@@ -9,8 +9,21 @@ class AppController extends Controller
 		$this->model = new \App\Models\Settings;
 
 		$this->middleware('auth:api', [
-			'except' => [],
+			'except' => ['test'],
 		]);
+	}
+
+	public function test()
+	{
+		$fi = fopen("php://input", "rb");
+		$p = JSON_decode(fread($fi, 2000));
+		return $p;
+		// $fname = substr ($p->source, strrpos($p->source,"/")+1);  
+		// $fo = fopen("img/".$fname,"wb");  while($buf=fread($fi,50000)) fwrite($fo,$buf);
+		// fclose($fi);  fclose($fo);
+
+		// dd(request()->all());
+		return request()->all();
 	}
 
 	public function endpoints()

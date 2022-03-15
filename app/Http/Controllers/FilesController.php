@@ -14,9 +14,7 @@ class FilesController extends Controller
 	}
 
 	public function view($slug) {
-		$file = \Cache::remember("file-{$slug}", 60*30*24, function() use($slug) {
-			return \App\Models\Files::where('slug', $slug)->first();
-		});
+		$file = \App\Models\Files::where('slug', $slug)->first();
 
 		if (! $file) return '';
 

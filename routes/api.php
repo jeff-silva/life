@@ -24,6 +24,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function($router) {
     Route::post('password-reset-change', '\App\Http\Controllers\AuthController@passwordResetChange');
 });
 
+Route::post('app/test', '\App\Http\Controllers\AppController@test');
 Route::get('app/endpoints', '\App\Http\Controllers\AppController@endpoints');
 Route::get('app/search', '\App\Http\Controllers\AppController@search');
 Route::post('app/mail-test', '\App\Http\Controllers\AppController@mailTest');

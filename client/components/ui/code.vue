@@ -1,5 +1,7 @@
 <template>
-    <div ref="monaco" style="width:100%; height:150px;"></div>
+    <div style="overflow:hidden;">
+        <div ref="monaco" style="width:100%; height:150px;"></div>
+    </div>
 </template>
 
 <script>
@@ -62,10 +64,19 @@ export default {
         getValue() {
             return this.props.value = this.monaco.getModel().getValue();
         },
+
+        resizeHandler() {
+            this.monaco.layout({width:0});
+        },
     },
     
     mounted() {
         this.monacoInit();
+        window.addEventListener('resize', this.resizeHandler);
+    },
+
+    beforeDestroy() {
+        window.removeEventListener('resize', this.resizeHandler);
     },
 }
 </script>

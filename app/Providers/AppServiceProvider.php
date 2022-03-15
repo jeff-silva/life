@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         if (\Schema::hasTable('settings')) {
             config(\App\Models\Settings::getAll());
+            \App::setLocale(config('app.locale'));
         }
     }
 }

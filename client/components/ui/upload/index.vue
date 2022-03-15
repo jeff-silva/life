@@ -1,8 +1,8 @@
 <template>
-    <div class="d-block" @click="openFileBrowser()">
+    <div @click="openFileBrowser()">
         <slot>
             <button type="button" class="btn btn-outline-light w-100">
-                {{ file? file.name: 'Upload' }} <i class="fas fa-fw fa-upload"></i>
+                Upload <i class="fas fa-fw fa-upload"></i>
             </button>
         </slot>
     </div>
@@ -11,9 +11,7 @@
 <script>
 export default {
     props: {
-        value: {default:""}, // base64, base64-json, url, file-json
-        type: {default:"base64"}, // base64, base64-json, url, file-json
-        folder: {default:""}, // pasta de upload
+        value: {type:[Boolean, Object]},
     },
 
     watch: {
@@ -33,7 +31,6 @@ export default {
     data() {
         return {
             props: JSON.parse(JSON.stringify(this.$props)),
-            file: false,
         };
     },
 
@@ -42,10 +39,33 @@ export default {
             Object.assign(document.createElement('input'), {
                 type: "file",
                 onchange: (ev) => {
-                    this.file = ev.target.files[0];
-                    this.props.value = ev.target.files[0];
+                    this.file(ev.target.files[0]);
                 },
             }).click();
+        },
+
+        file(file=null) {
+            if (file!==null) {
+                let r = new FileReader();
+                r.onload = (ev) => {
+                    this.props.value = {
+                        _isFile: true,
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        file: file,
+                        base64: ev.target.result,
+                    };
+                    this.$emit('input', this.props.value);
+                    this.$emit('change', this.props.value);
+                };
+                r.readAsDataURL(file);
+            }
+            return this.props.value;
+        },
+
+        clear() {
+            this.props.value = false;
         },
     },
 }

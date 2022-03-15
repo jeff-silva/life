@@ -35,7 +35,7 @@
                             </a>
                         </transition>
         
-                        <ui-dropdown position="bottom-right">
+                        <ui-dropdown type="bottom-right">
                             <a href="javascript:;" class="btn btn-outline-success">
                                 <i class="fas fa-download me-1"></i> Exportar
                             </a>
@@ -128,7 +128,7 @@
                                 </slot>
     
                                 <td>
-                                    <ui-dropdown position="left" trigger="hover">
+                                    <ui-dropdown type="left" trigger="hover">
                                         <button type="button" class="btn btn-light" style="border-radius:50%;">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </button>

@@ -27,19 +27,109 @@ class Files extends \Illuminate\Database\Eloquent\Model
 	];
 
 	protected $hidden = [
-	    // 'content',
+	    'content',
 	];
 
 
-	public function setFolderAttribute($value)
+	public function getSlugAttribute($value)
 	{
-		$this->attributes['folder'] = trim($value, '/');
+		return $value? $value: \Str::slug($this->name) .'-'. uniqid();
+	}
+
+
+	public function getNameAttribute($value)
+	{
+		return $value? $value: uniqid();
 	}
 
 
 	public function getFolderAttribute($value)
 	{
-		return trim($value, '/');
+		$value = trim($value, '/');
+		return $value=='null'? '': $value;
+	}
+
+
+	public function setSizeAttribute($value)
+	{
+		if ($file = request()->file('content')) {
+			$value = $file->getSize();
+		}
+
+		$value = is_numeric($value)? $value: 0;
+		return $this->attributes['size'] = $value;
+	}
+
+
+	public function setMimeAttribute($value)
+	{
+		if ($file = request()->file('content')) {
+			$value = $file->getClientMimeType();
+		}
+
+		$value = $value=='null'? null: $value;
+		return $this->attributes['mime'] = $value;
+	}
+
+
+	public function setTypeAttribute($value)
+	{
+		if ($file = request()->file('content')) {
+			$value = preg_replace('/\/.+/', '', $file->getClientMimeType());
+		}
+
+		$value = $value=='null'? null: $value;
+		return $this->attributes['type'] = $value;
+	}
+
+
+	public function setExtAttribute($value)
+	{
+		if ($file = request()->file('content')) {
+			$value = $file->getClientOriginalExtension();
+		}
+
+		$value = $value=='null'? null: $value;
+		return $this->attributes['ext'] = $value;
+	}
+
+
+	public function setIsTextAttribute($value)
+	{
+		if ($file = request()->file('content')) {
+			$type = preg_replace('/\/.+/', '', $file->getClientMimeType());
+			$ext = $file->getClientOriginalExtension();
+			$texts = ['svg', 'csv'];
+
+			if ($type=='text' OR in_array($ext, $texts)) {
+				$value = 1;
+			}
+			else {
+				$value = null;
+			}
+		}
+
+		$value = $value? 1: null;
+		return $this->attributes['is_text'] = $value;
+	}
+
+
+	public function setUrlAttribute($value)
+	{
+		if ($this->slug) {
+			$storage_type = config('app_model_files.storage_type'); // database | file
+			if ($storage_type=='database') {
+				$value = "/api/files/view/{$this->slug}";
+			}
+			else if ($storage_type=='file') {
+				$value = "/uploads/{$this->slug}";
+			}
+		}
+		else {
+			$value = '';
+		}
+
+		return $this->attributes['url'] = $value;
 	}
 
 
@@ -58,90 +148,6 @@ class Files extends \Illuminate\Database\Eloquent\Model
 			->get();
 
 		return $folders;
-	}
-
-
-	public static function upload($save)
-	{
-		$save = array_merge([
-			'slug' => '',
-			'name' => '',
-			'file' => false,
-		], $save);
-
-		$file = false;
-		$file_contents = false;
-		$storage_type = config('app_model_files.storage_type'); // database | file
-
-		// If has file
-		if (isset($save['file']) AND !empty($save['file'])) {
-			$file = $save['file'];
-			$file_contents = file_get_contents($file);
-			$file_type = preg_replace('/([a-zA-Z0-9+])\/.+/', '$1', (new \finfo(FILEINFO_MIME))->buffer($file_contents));
-
-			$save['slug'] = \Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) .'-'. uniqid() .'.'. $file->getClientOriginalExtension();
-			$save['name'] = $save['name']? $save['name']: pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-			$save['size'] = $file->getSize();
-			$save['mime'] = $file->getClientMimeType();
-			$save['type'] = $file_type;
-			$save['ext'] = $file->getClientOriginalExtension();
-			$save['is_text'] = ($save['type']=='text' OR in_array($save['ext'], ['svg']))? 1: null;
-			// Salvar arquivo locamente se necessário
-		}
-
-
-
-		// If no file and has url
-		if (!$file AND isset($save['url']) AND !empty($save['url'])) {
-			$file_contents = file_get_contents($save['url']);
-			$exp = array_map('strtolower', preg_split('/[^a-zA-Z0-9]/', (new \finfo(FILEINFO_MIME))->buffer($file_contents)));
-
-			$save['ext'] = str_replace(['jpeg'], ['jpg'], $exp[1]);
-			$save['slug'] = uniqid() .'.'. $save['ext'];
-			$save['name'] = $save['name']? $save['name']: $save['url'];
-			$save['mime'] = str_replace(['image/svg'], ['image/svg+xml'], "{$exp[0]}/{$exp[1]}");
-			$save['type'] = $exp[0];
-			$save['is_text'] = ($save['type']=='text' OR in_array($save['ext'], ['svg']))? 1: null;
-			$save['size'] = call_user_func(function($url) {
-				$ch = curl_init($url);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-				curl_setopt($ch, CURLOPT_HEADER, TRUE);
-				curl_setopt($ch, CURLOPT_NOBODY, TRUE);
-				$data = curl_exec($ch);
-				$size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
-				curl_close($ch);
-				return $size;
-			}, $save['url']);
-		}
-
-
-		// Content
-		if ($file_contents AND $storage_type=='database') {
-			$save['content'] = $file_contents;
-
-			if (!$save['is_text']) {
-				$save['content'] = "data:{$save['mime']};base64,". base64_encode($file_contents);
-			}
-		}
-
-
-		// Slug
-		if ($save['slug']) {
-			if ($storage_type=='database') {
-				$save['url'] = "/api/files/view/{$save['slug']}";
-			}
-			else if ($storage_type=='file') {
-				$save['url'] = "/uploads/{$save['slug']}";
-			}
-		}
-
-		$save = self::create($save);
-
-		if ($save->id AND $storage_type=='file' AND $file_contents) {
-			\Storage::disk('public')->put($save->slug, $file_contents);
-		}
-
-		return $save;
 	}
 
 

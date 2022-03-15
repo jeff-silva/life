@@ -1,5 +1,5 @@
 <template>
-    <div class="ui-dropdown d-inline-block" :class="`ui-dropdown-position-${position}`">
+    <div class="ui-dropdown d-inline-block" :class="`ui-dropdown-type-${type}`">
         <slot></slot>
 
         <div class="ui-dropdown-dropdown bg-white shadow-sm" :class="{'ui-dropdown-dropdown-shown':props.shown}">
@@ -13,7 +13,7 @@
 <script>
 export default {
     props: {
-        position: {default:'bottom'}, // top-left|top|top-right|right-top|right|right-bottom|bottom-right|bottom|bottom-left|left-bottom|left|left-top
+        type: {default:'bottom'}, // top-left|top|top-right|right-top|right|right-bottom|bottom-right|bottom|bottom-left|left-bottom|left|left-top
         shown: {default:false},
     },
 
@@ -73,16 +73,16 @@ export default {
     visibility: visible;
 }
 
-.ui-dropdown-position-top-left .ui-dropdown-dropdown {bottom:100%; left:0; margin-bottom:10px;}
-.ui-dropdown-position-top .ui-dropdown-dropdown {bottom:100%; left:50%; transform:translate(-50%, 0); margin-bottom:10px;}
-.ui-dropdown-position-top-right .ui-dropdown-dropdown {bottom:100%; right:0; margin-bottom:10px;}
-.ui-dropdown-position-right-top .ui-dropdown-dropdown {left:100%; top:0; margin-left:10px;}
-.ui-dropdown-position-right .ui-dropdown-dropdown {left:100%; top:50%; transform:translate(0, -50%); margin-left:10px;}
-.ui-dropdown-position-right-bottom .ui-dropdown-dropdown {left:100%; bottom:0; margin-left:10px;}
-.ui-dropdown-position-bottom-right .ui-dropdown-dropdown {top:100%; right:0; margin-top:10px;}
-.ui-dropdown-position-bottom .ui-dropdown-dropdown {top:100%; left:50%; transform:translate(-50%, 0); margin-top:10px;}
-.ui-dropdown-position-bottom-left .ui-dropdown-dropdown {top:100%; left:0; margin-top:10px;}
-.ui-dropdown-position-left-bottom .ui-dropdown-dropdown {right:100%; bottom:0; margin-right:10px;}
-.ui-dropdown-position-left .ui-dropdown-dropdown {right:100%; top:50%; transform:translate(0, -50%); margin-right:10px;}
-.ui-dropdown-position-left-top .ui-dropdown-dropdown {right:100%; top:0; margin-right:10px;}
+.ui-dropdown-type-top-left .ui-dropdown-dropdown {bottom:100%; left:0; margin-bottom:10px;}
+.ui-dropdown-type-top .ui-dropdown-dropdown {bottom:100%; left:50%; transform:translate(-50%, 0); margin-bottom:10px;}
+.ui-dropdown-type-top-right .ui-dropdown-dropdown {bottom:100%; right:0; margin-bottom:10px;}
+.ui-dropdown-type-right-top .ui-dropdown-dropdown {left:100%; top:0; margin-left:10px;}
+.ui-dropdown-type-right .ui-dropdown-dropdown {left:100%; top:50%; transform:translate(0, -50%); margin-left:10px;}
+.ui-dropdown-type-right-bottom .ui-dropdown-dropdown {left:100%; bottom:0; margin-left:10px;}
+.ui-dropdown-type-bottom-right .ui-dropdown-dropdown {top:100%; right:0; margin-top:10px;}
+.ui-dropdown-type-bottom .ui-dropdown-dropdown {top:100%; left:50%; transform:translate(-50%, 0); margin-top:10px;}
+.ui-dropdown-type-bottom-left .ui-dropdown-dropdown {top:100%; left:0; margin-top:10px;}
+.ui-dropdown-type-left-bottom .ui-dropdown-dropdown {right:100%; bottom:0; margin-right:10px;}
+.ui-dropdown-type-left .ui-dropdown-dropdown {right:100%; top:50%; transform:translate(0, -50%); margin-right:10px;}
+.ui-dropdown-type-left-top .ui-dropdown-dropdown {right:100%; top:0; margin-right:10px;}
 </style>

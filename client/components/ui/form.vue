@@ -25,16 +25,44 @@ export default {
 
     methods: {
         submit() {
+            let method=this.method, url=this.action, data=null, params=null;
+            let headers = {'Content-Type': 'multipart/form-data'};
+
+            if (this.method=="post") {
+                data = new FormData();
+                for(let name in this.value) {
+                    let value = this.value[name];
+
+                    if (value && typeof value=="object" && value._isFile) {
+                        let arr = value.base64.split(','),
+                            mime = arr[0].match(/:(.*?);/)[1],
+                            bstr = atob(arr[1]), 
+                            n = bstr.length, 
+                            u8arr = new Uint8Array(n);
+
+                        while(n--){
+                            u8arr[n] = bstr.charCodeAt(n);
+                        }
+                        
+                        value = new File([u8arr], value.name, {type:value.type});
+
+                        // let content = atob(value.base64.split(',')[1]);
+                        // console.log(value.name, value.type, content);
+                        // value = new File([content], value.name, {type:value.type});
+                    }
+
+                    data.append(name, value);
+                }
+            }
+            else {
+                params = this.value;
+            }
+
             this.loading = true;
             this.error = false;
             this.errorFields = {};
             
-            let axios = this.$axios({
-                method: this.method,
-                url: this.action,
-                data: (this.method!='get'? this.value: null),
-                params: (this.method=='get'? this.value: null),
-            }).then(resp => {
+            let axios = this.$axios({ method, url, data, params, headers }).then(resp => {
                 let respData = this.parseResponseData(resp.data);
                 this.loading = false;
                 this.response = respData;
