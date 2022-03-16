@@ -13,7 +13,7 @@ class FilesController extends Controller
 		]);
 	}
 
-	public function view($slug) {
+	public function view($slug, $ext=false) {
 		$file = \App\Models\Files::where('slug', $slug)->first();
 
 		if (! $file) return '';
@@ -30,9 +30,6 @@ class FilesController extends Controller
 		]);
 	}
 	
-	public function upload() {
-		return \App\Models\Files::upload(request()->all());
-	}
 
 	public function search()
     {

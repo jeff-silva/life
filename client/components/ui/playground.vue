@@ -1,11 +1,11 @@
 <template>
     <div class="ui-playground shadow-sm">
         <div class="row g-0">
-            <div class="col-6 border p-2 bg-light">
+            <div class="col-6 border p-2 bg-light" :style="`height:${height};`">
                 <v-runtime-template :template="props.value"></v-runtime-template>
             </div>
             <div class="col-6">
-                <ui-code v-model="props.value" :style="`height:${height};`"></ui-code>
+                <ui-code v-model="props.value" :style="`height:${height};`" language="html"></ui-code>
             </div>
         </div>
     </div>
@@ -19,7 +19,7 @@ export default {
 
     props: {
         value: {default:""},
-        height: {default:"250px"},
+        height: {default:"300px"},
     },
 
     watch: {

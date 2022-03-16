@@ -16,6 +16,7 @@ class AppParentSync extends AppBase
         if (!$app_parent) return $this->comment('APP_PARENT não definido');
 
         $files = [];
+        $files[] = base_path('app/Exceptions/Handler.php');
         $files[] = base_path('app/Http/Controllers/Controller.php');
         $files[] = base_path('app/Providers/AppServiceProvider.php');
         $files[] = base_path('app/Console/Commands/AppBase.php');

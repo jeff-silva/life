@@ -7,6 +7,7 @@
         @response="searchParamsUrl()"
         class="ui-model-search"
     >
+
         <div class="row g-0">
             <div class="col-12 pb-3 px-2">
                 <div class="d-flex align-items-center">
@@ -98,7 +99,8 @@
                         <thead>
                             <tr>
                                 <th width="30px">
-                                    <input type="checkbox" @click="selecteds=$event.target.checked? response.data.map(item => item.id): [];">
+                                    <!-- <input type="checkbox" @click="selecteds=$event.target.checked? response.data.map(item => item.id): [];"> -->
+                                    <ui-check type="checkbox"></ui-check>
                                 </th>
                                 <slot name="table-header">
                                     <th>-</th>
@@ -120,7 +122,8 @@
         
                             <tr v-for="i in response.data">
                                 <td>
-                                    <input type="checkbox" :value="i.id" v-model="selecteds">
+                                    <!-- <input type="checkbox" :value="i.id" v-model="selecteds"> -->
+                                    <ui-check type="checkbox"></ui-check>
                                 </td>
                                 
                                 <slot name="table-row" :item="i">
@@ -237,6 +240,10 @@ export default {
             this.$router.push({
                 query: this.searchParams,
             });
+            setTimeout(() => {
+                let u = new URL(location.href);
+                localStorage.setItem(`ui-model-search-${this.modelName}-url`, `${u.pathname}${u.search}`);
+            }, 200);
         },
 
         orderByArrow() {

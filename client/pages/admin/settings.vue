@@ -1,21 +1,23 @@
 <template>
-    <ui-form method="post" action="/api/settings" v-model="settings" #default="{loading, response}" success-text="Configurações salvas">
-        <div class="row g-0 bg-white shadow-sm">
-            <div class="col-12 col-md-2 bg-light">
-                <ui-nav :items="navItems"></ui-nav>
-            </div>
+    <div class="admin-settings bg-white">
+        <ui-form method="post" action="/api/settings" v-model="settings" #default="{loading, response}" success-text="Configurações salvas">
+            <el-tabs :value="$route.path" @tab-click="$router.push($event.name)">
+                <el-tab-pane :label="n.label" :name="n.to" :key="n.to" v-for="n in navItems">
+                    &nbsp;
+                </el-tab-pane>
+            </el-tabs>
     
-            <div class="col-12 col-md-10 p-3">
+            <div class="p-2">
                 <nuxt-child v-model="settings"></nuxt-child>
             </div>
-                
-            <div class="col-12 bg-light text-end p-2">
+
+            <div class="bg-light text-end p-2">
                 <button type="submit" class="btn btn-primary" v-loading="loading">
                     Salvar
                 </button>
             </div>
-        </div>
-    </ui-form>
+        </ui-form>
+    </div>
 </template>
 
 <script>
@@ -53,3 +55,8 @@ export default {
     },
 }
 </script>
+
+
+<style>
+.admin-settings .el-tabs__content {display: none !important;}
+</style>

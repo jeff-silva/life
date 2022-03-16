@@ -41,6 +41,7 @@ class Handler extends ExceptionHandler
                     'message' => '',
                     'fields' => new \stdClass,
                     'debug' => [],
+                    'data' => request()->all(),
                 ];
 
                 if ('production' == config('app.env')) {

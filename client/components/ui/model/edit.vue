@@ -25,9 +25,9 @@
                 Criar {{ singular }}
             </nuxt-link>
 
-            <button type="button" class="btn btn-light" @click="$router.go(-1)">
+            <nuxt-link :to="backUrl" class="btn btn-light">
                 Voltar
-            </button>
+            </nuxt-link>
 
             <button type="submit" class="btn btn-primary" v-loading="loading">
                 Salvar
@@ -74,6 +74,7 @@ export default {
     data() {
         return {
             finding: false,
+            backUrl: (localStorage.getItem(`ui-model-search-${this.modelName}-url`) || ''),
             props: JSON.parse(JSON.stringify(this.$props)),
         };
     },
@@ -97,6 +98,9 @@ export default {
                 confirmButtonText: `Lista de ${this.plural}`,
                 showCancelButton: true,
                 cancelButtonText: `Fechar`,
+            }).then(resp => {
+                if (!resp.isConfirmed) return;
+                this.$router.push(this.backUrl);
             });
 
             this.$router.push(`/admin/${this.modelName}/${respData.id}`);

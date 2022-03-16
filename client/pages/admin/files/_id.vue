@@ -15,11 +15,8 @@
         </ui-field>
         
         <ui-field label="Arquivo" layout="horizontal">
-            <!-- <ui-upload v-model="value.content" :url="value.url"></ui-upload> -->
-            <ui-upload-area v-model="value.content" :url="`${value.url}?r=${value.updated_at}`"></ui-upload-area>
-            <!-- <pre>value.content: {{ (value.content||'').length }}</pre> -->
-            <!-- <pre>value.content: {{ value.content }}</pre> -->
-            <pre>{{ `${value.url}?r=${value.updated_at}` }}</pre>
+            <ui-file v-model="value.content"></ui-file>
+            <ui-file-preview v-model="value" class="mt-2"></ui-file-preview>
         </ui-field>
 
         <ui-modal :value="$route.query.contentEdit" width="90vw" v-if="value.type=='image'" @close="$router.push({query:{}})">

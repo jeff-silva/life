@@ -60,6 +60,21 @@ let helper = {
             maximumFractionDigits: decimals,
         }).format(number);
     },
+
+    base64ToFile(base64) {
+        if ("data:"!=(base64||"").substring(0, 5)) return false;
+        let meta = base64.split('base64,').shift();
+        let mime = meta.replace(/data:(.+?);/g, '$1');
+        let fname = meta.replace(/fname:(.+?);/g, '$1');
+        console.log({meta, mime, fname});
+        return false;
+
+        // let e = base64.split(/data:|;base64,/g).filter(v => v);
+        // let file = {type:e[0]};
+        // file.ext = e[0].split('/').pop().toLowerCase().replace('jpeg', 'jpg').replace('svg+xml', 'svg');
+        // file.name = e[1].substr(0, 20).replace(/[^a-zA-Z]/g, '') +`.${file.ext}`;
+        // return file;
+    },
 };
 
 Vue.prototype.$helper = helper;

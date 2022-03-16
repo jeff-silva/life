@@ -1,7 +1,5 @@
 <template>
-    <div style="overflow:hidden;">
-        <div ref="monaco" style="width:100%; height:150px;"></div>
-    </div>
+    <div ref="monaco" style="width:100%; height:150px;"></div>
 </template>
 
 <script>

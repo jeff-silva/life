@@ -18,6 +18,8 @@
   },
   "devDependencies": {
     "moment": "^2.29.1",
+    "monaco-editor": "^0.33.0",
+    "sweetalert2": "^11.4.4",
     "v-runtime-template": "^1.10.0",
     "vuedraggable": "^2.24.3"
   }

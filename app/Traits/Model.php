@@ -4,8 +4,19 @@ namespace App\Traits;
 
 trait Model
 {
-    public static function bootModel() {
+    public static function bootModel()
+    {
+        static::retrieved(function($model) {
+            $model->toOutput();
+        });
+
         static::saving(function($model) {
+
+            if (in_array('slug', $model->getFillable())) {
+                $model->slug = $model->slug? $model->slug: \Str::slug($model->name);
+            }
+
+            $model->toOutput();
             $validate = $model->validate();
 
             if ($validate->fails()) {
@@ -15,7 +26,16 @@ trait Model
             $storage_type = config('app_model_files.storage_type'); // database | file
             foreach($model->attributes as $name=>$value) {
 
+                if (in_array($value, ['null', 'false'])) {
+                    $value = null;
+                }
+
+                else if (is_array($value)) {
+                    $value = json_encode($value);
+                }
+
                 if ($file = request()->file($name)) {
+                    
                     if ($storage_type=='database') {
                         $type = preg_replace('/\/.+/', '', $file->getClientMimeType());
                         $ext = $file->getClientOriginalExtension();
@@ -35,15 +55,17 @@ trait Model
                     }
                 }
 
-                if (is_array($value)) {
-                    $value = json_encode($value);
-                }
-
                 $model->attributes[ $name ] = $value;
             }
 
             return $model;
         });
+    }
+
+
+    public function toOutput()
+    {
+        // return $this;
     }
 
 
@@ -80,12 +102,13 @@ trait Model
     }
 
 
-    public function setSlugAttribute($value)
-    {
-        if (in_array('slug', $this->getFillable()) AND !$this->attributes['slug']) {
-            $this->attributes['slug'] = \Str::slug($this->name);
-        }
-    }
+    // public function setSlugAttribute($value)
+    // {
+    //     $slug = isset($this->attributes['slug'])? $this->attributes['slug']: null;
+    //     if (in_array('slug', $this->getFillable()) AND !$slug) {
+    //         $this->attributes['slug'] = \Str::slug($this->name);
+    //     }
+    // }
 
 
     public function setDeletedAtAttribute($value)

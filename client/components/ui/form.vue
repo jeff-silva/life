@@ -33,30 +33,19 @@ export default {
                 for(let name in this.value) {
                     let value = this.value[name];
 
-                    if (value && typeof value=="object" && value._isFile) {
-                        let arr = value.base64.split(','),
-                            mime = arr[0].match(/:(.*?);/)[1],
-                            bstr = atob(arr[1]), 
-                            n = bstr.length, 
-                            u8arr = new Uint8Array(n);
-
-                        while(n--){
-                            u8arr[n] = bstr.charCodeAt(n);
-                        }
-                        
+                    if (value && typeof value=="object" && value.type && value.base64) {
+                        let arr = value.base64.split(','), mime = arr[0].match(/:(.*?);/)[1], bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+                        while(n--) { u8arr[n] = bstr.charCodeAt(n); }
                         value = new File([u8arr], value.name, {type:value.type});
-
-                        // let content = atob(value.base64.split(',')[1]);
-                        // console.log(value.name, value.type, content);
-                        // value = new File([content], value.name, {type:value.type});
                     }
 
-                    data.append(name, value);
+                    data.append(name, value||'');
                 }
             }
             else {
                 params = this.value;
             }
+
 
             this.loading = true;
             this.error = false;

@@ -13,7 +13,7 @@
         </ui-field>
 
         <ui-field label="Foto" layout="horizontal" :error="errorFields.photo_id">
-            <ui-file-select v-model="value.photo_id"></ui-file-select>
+            <ui-file-id v-model="value.photo_id"></ui-file-id>
         </ui-field>
     </ui-model-edit>
 </template>

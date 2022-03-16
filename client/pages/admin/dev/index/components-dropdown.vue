@@ -1,8 +1,8 @@
 <template>
     <div>
         <ui-field label="Position">
-            <select class="form-control" v-model="bind.position">
-                <option :value="p" v-for="p in positions">{{ p }}</option>
+            <select class="form-control" v-model="bind.type">
+                <option :value="t" v-for="t in types">{{ t }}</option>
             </select>
         </ui-field>
 
@@ -16,9 +16,9 @@
 export default {
     data() {
         return {
-            positions: "top-left|top|top-right|right-top|right|right-bottom|bottom-right|bottom|bottom-left|left-bottom|left|left-top".split("|"),
+            types: "top-left|top|top-right|right-top|right|right-bottom|bottom-right|bottom|bottom-left|left-bottom|left|left-top".split("|"),
             bind: {
-                position: "bottom-left",
+                type: "bottom-left",
             },
         };
     },
@@ -26,7 +26,7 @@ export default {
     computed: {
         _code() {
             return [
-                `<ui-dropdown position="${this.bind.position}" :shown="true">`,
+                `<ui-dropdown type="${this.bind.type}" :shown="true">`,
                 `\t<button type="button" class="btn btn-primary">`,
                 `\t\tDropdown`,
                 `\t</button>`,

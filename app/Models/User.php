@@ -11,9 +11,6 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-	use HasApiTokens;
-	use HasFactory;
-	use Notifiable;
 	use \App\Traits\Model;
 
 	protected $table = 'users';
@@ -46,7 +43,7 @@ class User extends Authenticatable implements JWTSubject
 	 * @var array<string, string>
 	 */
 	protected $casts = [
-	    'email_verified_at' => 'datetime',
+	    // 'email_verified_at' => 'datetime',
 	];
 
 
@@ -84,29 +81,11 @@ class User extends Authenticatable implements JWTSubject
 	}
 
 
-	public function setPasswordAttribute($value)
+	public function toOutput()
 	{
-		if (! $value) return;
-		if (! \Hash::needsRehash($value)) return;
-		return $this->attributes['password'] = \Hash::make($value);
-	}
-
-
-	public function passwordResetStart()
-	{
-		if (! $this->id) return;
-		$this->remember_token = substr(uniqid(), 0, 6);
-		$this->save();
-
-		(new \App\Mail\UserPasswordReset($this))->sendTo($this->email);
-
-		return $this;
-	}
-
-
-	public function setPhotoIdAttribute($value)
-	{
-		return $this->attributes['photo_id'] = $value? $value: null;
+		$this->photo_id = is_numeric($this->photo_id)? $this->photo_id: null;
+		$this->email_verified_at = strtotime($this->email_verified_at)? $this->email_verified_at: null;
+		$this->created_at = strtotime($this->created_at)? $this->created_at: null;
 	}
 
 

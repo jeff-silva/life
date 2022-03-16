@@ -1,4 +1,69 @@
 <?php return [
+  'auth-login' => [
+    'route' => 'auth/login',
+    'call' => '\\App\\Http\\Controllers\\AuthController@login',
+    'method' => 'post',
+  ],
+  'auth-logout' => [
+    'route' => 'auth/logout',
+    'call' => '\\App\\Http\\Controllers\\AuthController@logout',
+    'method' => 'post',
+  ],
+  'auth-refresh' => [
+    'route' => 'auth/refresh',
+    'call' => '\\App\\Http\\Controllers\\AuthController@refresh',
+    'method' => 'post',
+  ],
+  'auth-me' => [
+    'route' => 'auth/me',
+    'call' => '\\App\\Http\\Controllers\\AuthController@me',
+    'method' => 'post',
+  ],
+  'auth-register' => [
+    'route' => 'auth/register',
+    'call' => '\\App\\Http\\Controllers\\AuthController@register',
+    'method' => 'post',
+  ],
+  'auth-password-reset-start' => [
+    'route' => 'auth/password-reset-start',
+    'call' => '\\App\\Http\\Controllers\\AuthController@passwordResetChange',
+    'method' => 'post',
+  ],
+  'app-test' => [
+    'route' => 'app/test',
+    'call' => '\\App\\Http\\Controllers\\AppController@test',
+    'method' => 'post',
+  ],
+  'app-endpoints' => [
+    'route' => 'app/endpoints',
+    'call' => '\\App\\Http\\Controllers\\AppController@endpoints',
+    'method' => 'get',
+  ],
+  'app-search' => [
+    'route' => 'app/search',
+    'call' => '\\App\\Http\\Controllers\\AppController@search',
+    'method' => 'get',
+  ],
+  'app-mail-test' => [
+    'route' => 'app/mail-test',
+    'call' => '\\App\\Http\\Controllers\\AppController@mail-test',
+    'method' => 'get',
+  ],
+  'app-settings-get-all' => [
+    'route' => 'settings',
+    'call' => '\\App\\Http\\Controllers\\SettingsController@getAll',
+    'method' => 'get',
+  ],
+  'app-settings-save-all' => [
+    'route' => 'settings',
+    'call' => '\\App\\Http\\Controllers\\SettingsController@saveAll',
+    'method' => 'post',
+  ],
+  'files-view' => [
+    'route' => 'files/view/{slug}.{ext}',
+    'call' => '\\App\\Http\\Controllers\\FilesController@view',
+    'method' => 'get',
+  ],
   'files-search' => [
     'route' => 'files/search',
     'call' => '\\App\\Http\\Controllers\\FilesController@search',
