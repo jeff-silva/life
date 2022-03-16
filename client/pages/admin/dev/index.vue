@@ -20,6 +20,7 @@ export default {
                 {label:"Home", to:"/admin/dev/", children:[]},
                 {label:"Endpoints", to:"/admin/dev/endpoints/", children:[]},
                 {label:"Components", children:[
+                    {label:"Checks", to:"/admin/dev/components-check/", children:[]},
                     {label:"Dropdown", to:"/admin/dev/components-dropdown/", children:[]},
                 ]},
                 {label:"Admin", to:"/admin/", children:[]},

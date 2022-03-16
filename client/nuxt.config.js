@@ -22,6 +22,13 @@ export default {
     ]
   },
 
+  // https://nuxtjs.org/examples/loading/custom-loading-component/
+  loadingIndicator: {
+    name: 'folding-cube',
+    color: '#fff',
+    background: '#3459e6',
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['@/app.css'],
 
