@@ -34,6 +34,11 @@ export default {
                     let value = this.value[name];
 
                     if (Array.isArray(value)) {
+                        if (value.length==0) {
+                            data.append(`${name}`, '');
+                            continue;
+                        }
+
                         for(let i in value) {
                             data.append(`${name}[]`, value[i] || "");
                         }

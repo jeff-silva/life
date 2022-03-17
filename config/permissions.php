@@ -1,42 +1,30 @@
-<?php return [
+<?php
+
+/*
+ * Como gerar permissões:
+ * As chaves são geradas como array associativa chave => descrição dentro de keys.
+ * 
+ * Permissões de banco de dados sempre usam como prefixo o nome da tabela, por exemplo:
+ * 'products:save' => 'Salvar dados de produtos',
+ * 'products:delete' => 'Deletar dados de produtos',
+ * 
+ * Os sufixos :save e :delete são verificados automaticamente
+ * pela model antes de salvar/deletar um dado.
+ * 
+ * As permissões para visualizar uma página são o name da mesma,
+ * que geralmente seguem o nome do arquivo como no exemplo abaixo:
+ * /pages/admin/products/index.vue => admin-products
+ * /pages/admin/products/_id.vue => admin-products-id
+ */
+
+return [
   'keys' => [
     'admin-settings' => 'Configurações principais',
     'admin-settings-email' => 'Configurações de e-mail',
     'admin-settings-files' => 'Configurações de arquivos',
-    'admin-files' => 'Acessar lista de files',
-    'admin-files-id' => 'Acessar edição de files',
-    'files-save' => 'Salvar dados de files',
-    'files-delete' => 'Deletar dados de files',
-    'admin-life-events' => 'Acessar lista de life_events',
-    'admin-life-events-id' => 'Acessar edição de life_events',
-    'life_events-save' => 'Salvar dados de life_events',
-    'life_events-delete' => 'Deletar dados de life_events',
-    'admin-life-persons' => 'Acessar lista de life_persons',
-    'admin-life-persons-id' => 'Acessar edição de life_persons',
-    'life_persons-save' => 'Salvar dados de life_persons',
-    'life_persons-delete' => 'Deletar dados de life_persons',
-    'admin-life-persons-interactions' => 'Acessar lista de life_persons_interactions',
-    'admin-life-persons-interactions-id' => 'Acessar edição de life_persons_interactions',
-    'life_persons_interactions-save' => 'Salvar dados de life_persons_interactions',
-    'life_persons_interactions-delete' => 'Deletar dados de life_persons_interactions',
-    'admin-life-worlds' => 'Acessar lista de life_worlds',
-    'admin-life-worlds-id' => 'Acessar edição de life_worlds',
-    'life_worlds-save' => 'Salvar dados de life_worlds',
-    'life_worlds-delete' => 'Deletar dados de life_worlds',
-    'admin-pages' => 'Acessar lista de pages',
-    'admin-pages-id' => 'Acessar edição de pages',
-    'pages-save' => 'Salvar dados de pages',
-    'pages-delete' => 'Deletar dados de pages',
-    'admin-settings-id' => 'Acessar edição de settings',
-    'settings-save' => 'Salvar dados de settings',
-    'settings-delete' => 'Deletar dados de settings',
-    'admin-users' => 'Acessar lista de users',
-    'admin-users-id' => 'Acessar edição de users',
-    'users-save' => 'Salvar dados de users',
-    'users-delete' => 'Deletar dados de users',
-    'admin-users-groups' => 'Acessar lista de users_groups',
-    'admin-users-groups-id' => 'Acessar edição de users_groups',
-    'users_groups-save' => 'Salvar dados de users_groups',
-    'users_groups-delete' => 'Deletar dados de users_groups',
+    'files:save' => 'Salvar arquivos',
+    'files:delete' => 'Deletar arquivos',
+    'admin-files' => 'Listar arquivos',
+    'admin-files-id' => 'Editar arquivos',
   ],
 ];

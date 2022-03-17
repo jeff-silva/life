@@ -21,19 +21,30 @@ class AppPermissions extends AppBase
         $config_permissions = $this->addPermissionKey($config_permissions, 'admin-settings', 'Configurações principais');
         $config_permissions = $this->addPermissionKey($config_permissions, 'admin-settings-email', 'Configurações de e-mail');
         $config_permissions = $this->addPermissionKey($config_permissions, 'admin-settings-files', 'Configurações de arquivos');
-        
-        foreach($this->getTables() as $table) {
-            if ($this->ignoredTable($table->Name)) continue;
-            $table_kebab = (string) \Str::of($table->Name)->studly()->kebab();
 
-            $config_permissions = $this->addPermissionKey($config_permissions, "admin-{$table_kebab}", "Acessar lista de {$table->Name}");
-            $config_permissions = $this->addPermissionKey($config_permissions, "admin-{$table_kebab}-id", "Acessar edição de {$table->Name}");
+        $content = implode("\n", [
+            '<?php',
+            '',
+            '/*',
+            ' * Como gerar permissões:',
+            ' * As chaves são geradas como array associativa chave => descrição dentro de keys.',
+            ' * ',
+            ' * Permissões de banco de dados sempre usam como prefixo o nome da tabela, por exemplo:',
+            ' * \'products:save\' => \'Salvar dados de produtos\',',
+            ' * \'products:delete\' => \'Deletar dados de produtos\',',
+            ' * ',
+            ' * Os sufixos :save e :delete são verificados automaticamente',
+            ' * pela model antes de salvar/deletar um dado.',
+            ' * ',
+            ' * As permissões para visualizar uma página são o name da mesma,',
+            ' * que geralmente seguem o nome do arquivo como no exemplo abaixo:',
+            ' * /pages/admin/products/index.vue => admin-products',
+            ' * /pages/admin/products/_id.vue => admin-products-id',
+            ' */',
+            '',
+            ('return '. $this->varExport($config_permissions) .';'),
+        ]);
 
-            $config_permissions = $this->addPermissionKey($config_permissions, "{$table->Name}-save", "Salvar dados de {$table->Name}");
-            $config_permissions = $this->addPermissionKey($config_permissions, "{$table->Name}-delete", "Deletar dados de {$table->Name}");
-        }
-
-        $content = '<?php return '. $this->varExport($config_permissions) .';';
         file_put_contents(config_path('permissions.php'), $content);
     }
 

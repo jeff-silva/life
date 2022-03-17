@@ -12,6 +12,12 @@ trait Model
 
         static::saving(function($model) {
 
+            $pkey = $model->getTable() .':save';
+            if (! $model->userCan($pkey)) {
+                $pname = mb_strtolower(config("permissions.keys.{$pkey}"));
+                throw new \Exception("Você não possui permissão para {$pname}");
+            }
+
             if (in_array('slug', $model->getFillable())) {
                 $model->slug = $model->slug? $model->slug: \Str::slug($model->name);
             }
@@ -23,8 +29,7 @@ trait Model
                 throw new \Exception(json_encode($validate->errors()));
             }
 
-            $storage_type = config('app_model_files.storage_type'); // database | file
-            foreach($model->attributes as $name=>$value) {
+            foreach($model->attributes as $name => $value) {
 
                 if (in_array($value, ['null', 'false'])) {
                     $value = null;
@@ -35,24 +40,7 @@ trait Model
                 }
 
                 if ($file = request()->file($name)) {
-                    
-                    if ($storage_type=='database') {
-                        $type = preg_replace('/\/.+/', '', $file->getClientMimeType());
-                        $ext = $file->getClientOriginalExtension();
-                        $texts = ['svg', 'csv'];
-
-                        if ($type=='text' OR in_array($ext, $texts)) {
-                            $value = file_get_contents($file);
-                        }
-                        else {
-                            $value = 'data:'. $file->getClientMimeType() .';base64,'. base64_encode(file_get_contents($file));
-                        }
-                    }
-                    else if ($storage_type=='file') {
-                        $filename = \Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) .'.'. $file->getClientOriginalExtension();
-                        \Storage::disk('public')->put($filename, file_get_contents($file));
-                        $value = "/uploads/{$filename}";
-                    }
+                    $value = $this->upload($file);
                 }
 
                 $model->attributes[ $name ] = $value;
@@ -75,6 +63,36 @@ trait Model
     }
 
 
+    public function userCan($pkeys)
+    {
+        $pkeys = is_array($pkeys)? $pkeys: [$pkeys];
+        $userPermissions = [];
+
+        if ($user = auth()->user()) {
+            if ($user->id==1 OR $user->group_id==1) return true;
+            if ($group = \App\Models\UsersGroups::select(['permissions'])->find($user->group_id)) {
+                $userPermissions = is_array($group->permissions)? $group->permissions: [];
+            }
+        }
+
+        foreach($pkeys as $i => $pkey) {
+            if ($pkey[0]==':') {
+                $pkey = $this->getTable() . $pkey;
+            }
+
+            if (! config("permissions.keys.{$pkey}")) {
+                continue;
+            }
+
+            if (! in_array($pkey, $userPermissions)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
     public function validationRules() {
         return ['name' => 'required'];
     }
@@ -84,6 +102,33 @@ trait Model
     {
         $data = $data===null? $this->attributes: $data;
         return \Validator::make($data, $this->validationRules());
+    }
+
+
+    public function upload($file)
+    {
+        $storage_type = config('app_model_files.storage_type'); // database | file
+        $value = null;
+
+        if ($storage_type=='database') {
+            $type = preg_replace('/\/.+/', '', $file->getClientMimeType());
+            $ext = $file->getClientOriginalExtension();
+            $texts = ['svg', 'csv'];
+
+            if ($type=='text' OR in_array($ext, $texts)) {
+                $value = file_get_contents($file);
+            }
+            else {
+                $value = 'data:'. $file->getClientMimeType() .';base64,'. base64_encode(file_get_contents($file));
+            }
+        }
+        else if ($storage_type=='file') {
+            $filename = \Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) .'.'. $file->getClientOriginalExtension();
+            \Storage::disk('public')->put($filename, file_get_contents($file));
+            $value = "/uploads/{$filename}";
+        }
+
+        return $value;
     }
 
 
