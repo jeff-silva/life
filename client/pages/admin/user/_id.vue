@@ -15,13 +15,17 @@
         <ui-field label="Foto" layout="horizontal" :error="errorFields.photo_id">
             <ui-file-id v-model="value.photo_id"></ui-file-id>
         </ui-field>
+        
+        <ui-field label="Grupo" layout="horizontal" :error="errorFields.group_id">
+            <ui-model-select model-name="users-groups" v-model="value.group_id"></ui-model-select>
+        </ui-field>
     </ui-model-edit>
 </template>
 
 <script>
 export default {
     layout: "default/admin",
-    middleware: "auth",
+    middleware: ["auth", "permission"],
 
     head() {
         return {

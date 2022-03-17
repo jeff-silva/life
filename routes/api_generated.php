@@ -32,7 +32,7 @@
   'app-test' => [
     'route' => 'app/test',
     'call' => '\\App\\Http\\Controllers\\AppController@test',
-    'method' => 'post',
+    'method' => 'get',
   ],
   'app-endpoints' => [
     'route' => 'app/endpoints',
@@ -423,5 +423,50 @@
     'method' => 'get',
     'route' => 'user/export',
     'call' => '\\App\\Http\\Controllers\\UserController@export',
+  ],
+  'users-groups-search' => [
+    'route' => 'users-groups/search',
+    'call' => '\\App\\Http\\Controllers\\UsersGroupsController@search',
+    'method' => 'get',
+  ],
+  'users-groups-find' => [
+    'method' => 'get',
+    'route' => 'users-groups/find/{id}',
+    'call' => '\\App\\Http\\Controllers\\UsersGroupsController@find',
+  ],
+  'users-groups-save' => [
+    'method' => 'post',
+    'route' => 'users-groups/save',
+    'call' => '\\App\\Http\\Controllers\\UsersGroupsController@save',
+  ],
+  'users-groups-valid' => [
+    'method' => 'post',
+    'route' => 'users-groups/valid',
+    'call' => '\\App\\Http\\Controllers\\UsersGroupsController@valid',
+  ],
+  'users-groups-delete' => [
+    'method' => 'post',
+    'route' => 'users-groups/delete',
+    'call' => '\\App\\Http\\Controllers\\UsersGroupsController@delete',
+  ],
+  'users-groups-restore' => [
+    'method' => 'post',
+    'route' => 'users-groups/restore',
+    'call' => '\\App\\Http\\Controllers\\UsersGroupsController@restore',
+  ],
+  'users-groups-clone' => [
+    'method' => 'post',
+    'route' => 'users-groups/clone/{id}',
+    'call' => '\\App\\Http\\Controllers\\UsersGroupsController@clone',
+  ],
+  'users-groups-import' => [
+    'method' => 'post',
+    'route' => 'users-groups/import',
+    'call' => '\\App\\Http\\Controllers\\UsersGroupsController@import',
+  ],
+  'users-groups-export' => [
+    'method' => 'get',
+    'route' => 'users-groups/export',
+    'call' => '\\App\\Http\\Controllers\\UsersGroupsController@export',
   ],
 ];

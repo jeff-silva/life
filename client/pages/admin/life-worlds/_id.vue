@@ -30,7 +30,7 @@
 <script>
 export default {
 	layout: "default/admin",
-	middleware: "auth",
+	middleware: ["auth", "permission"],
 	
 	head() {
 		return {

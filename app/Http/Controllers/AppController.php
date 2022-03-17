@@ -15,15 +15,9 @@ class AppController extends Controller
 
 	public function test()
 	{
-		$fi = fopen("php://input", "rb");
-		$p = JSON_decode(fread($fi, 2000));
-		return $p;
-		// $fname = substr ($p->source, strrpos($p->source,"/")+1);  
-		// $fo = fopen("img/".$fname,"wb");  while($buf=fread($fi,50000)) fwrite($fo,$buf);
-		// fclose($fi);  fclose($fo);
-
-		// dd(request()->all());
-		return request()->all();
+		return collect(config('permissions.keys'))->map(function($name, $key) {
+			return ['key' => $key, 'name' => $name];
+		})->values();
 	}
 
 	public function endpoints()

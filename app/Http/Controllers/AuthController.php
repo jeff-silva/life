@@ -42,7 +42,15 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        $user = auth()->user();
+
+        $user->permissions = [];
+        if ($group = \App\Models\UsersGroups::select(['permissions'])->find($user->group_id)) {
+            $user->permissions = $group->permissions;    
+        }
+
+        return $user;
+        // return response()->json();
     }
 
     /**

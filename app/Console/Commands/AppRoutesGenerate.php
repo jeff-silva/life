@@ -60,7 +60,7 @@ class AppRoutesGenerate extends AppBase
         $routes['app-test'] = [
             'route' => 'app/test',
             'call' => '\App\Http\Controllers\AppController@test',
-            'method' => 'post',
+            'method' => 'get',
         ];
 
         $routes['app-endpoints'] = [

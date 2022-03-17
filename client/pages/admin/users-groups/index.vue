@@ -1,6 +1,6 @@
 <template>
 	<ui-model-search
-		model-name="life-persons"
+		model-name="users-groups"
 		singular="Item"
 		plural="Itens"
 	>
@@ -23,6 +23,6 @@ export default {
 		return {
 			title: "Buscar",
 		};
-	}
+	},
 }
 </script>

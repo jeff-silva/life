@@ -69,6 +69,12 @@ trait Model
     }
 
 
+    public static function permissions()
+    {
+        return [];
+    }
+
+
     public function validationRules() {
         return ['name' => 'required'];
     }

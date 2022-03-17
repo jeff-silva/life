@@ -9,6 +9,7 @@ export default {
             {label:"Usuários", children:[
                 {label:"Buscar", to:"/admin/user", children:[]},
                 {label:"Novo", to:"/admin/user/new", children:[]},
+                {label:"Grupos", to:"/admin/users-groups", children:[]},
             ]},
             {label:"Configurações", to:"/admin/settings", children:[]},
             {label:"Arquivos", children:[

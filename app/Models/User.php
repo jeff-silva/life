@@ -20,6 +20,7 @@ class User extends Authenticatable implements JWTSubject
 		'name',
 		'email',
 		'photo_id',
+		'group_id',
 		'email_verified_at',
 		'password',
 		'remember_token',
@@ -56,6 +57,14 @@ class User extends Authenticatable implements JWTSubject
 	public function getJWTCustomClaims()
 	{
 		return [];
+	}
+
+
+	public static function permissions()
+	{
+		return [
+			'users-test' => 'Test',
+		];
 	}
 
 
@@ -104,5 +113,17 @@ class User extends Authenticatable implements JWTSubject
 	public function photos()
 	{
 		return $this->hasMany(\App\Models\Files::class, 'id', 'photo_id');
+	}
+
+
+	public function group()
+	{
+		return $this->hasOne(UsersGroups::class, 'id', 'group_id');
+	}
+
+
+	public function groups()
+	{
+		return $this->hasMany(UsersGroups::class, 'id', 'group_id');
 	}
 }

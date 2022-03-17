@@ -1107,6 +1107,7 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo_id` bigint(20) unsigned DEFAULT NULL,
+  `group_id` bigint(20) unsigned DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1115,6 +1116,8 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`),
   KEY `users_photo_id_foreign` (`photo_id`),
+  KEY `FK_users_users_groups` (`group_id`),
+  CONSTRAINT `FK_users_users_groups` FOREIGN KEY (`group_id`) REFERENCES `users_groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
   CONSTRAINT `users_photo_id_foreign` FOREIGN KEY (`photo_id`) REFERENCES `files` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 
@@ -1123,6 +1126,12 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 \Schema::hasColumn('users', 'id')?
 	\DB::select("ALTER TABLE users MODIFY COLUMN `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT"):
 	\DB::select("ALTER TABLE users ADD COLUMN `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT");
+
+
+// Create fk FK_users_users_groups
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_users_users_groups'"))->first()) {
+	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `FK_users_users_groups` FOREIGN KEY (`group_id`) REFERENCES `users_groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,");
+}
 
 
 // Create fk users_photo_id_foreign
@@ -1137,6 +1146,12 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 	\DB::select("ALTER TABLE users ADD COLUMN `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL");
 
 
+// Create fk FK_users_users_groups
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_users_users_groups'"))->first()) {
+	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `FK_users_users_groups` FOREIGN KEY (`group_id`) REFERENCES `users_groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,");
+}
+
+
 // Create fk users_photo_id_foreign
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='users_photo_id_foreign'"))->first()) {
 	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `users_photo_id_foreign` FOREIGN KEY (`photo_id`) REFERENCES `files` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
@@ -1147,6 +1162,12 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 \Schema::hasColumn('users', 'email')?
 	\DB::select("ALTER TABLE users MODIFY COLUMN `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL"):
 	\DB::select("ALTER TABLE users ADD COLUMN `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL");
+
+
+// Create fk FK_users_users_groups
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_users_users_groups'"))->first()) {
+	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `FK_users_users_groups` FOREIGN KEY (`group_id`) REFERENCES `users_groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,");
+}
 
 
 // Create fk users_photo_id_foreign
@@ -1161,6 +1182,30 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 	\DB::select("ALTER TABLE users ADD COLUMN `photo_id` bigint(20) unsigned DEFAULT NULL");
 
 
+// Create fk FK_users_users_groups
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_users_users_groups'"))->first()) {
+	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `FK_users_users_groups` FOREIGN KEY (`group_id`) REFERENCES `users_groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,");
+}
+
+
+// Create fk users_photo_id_foreign
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='users_photo_id_foreign'"))->first()) {
+	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `users_photo_id_foreign` FOREIGN KEY (`photo_id`) REFERENCES `files` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
+}
+
+
+// Create/Update column users.group_id
+\Schema::hasColumn('users', 'group_id')?
+	\DB::select("ALTER TABLE users MODIFY COLUMN `group_id` bigint(20) unsigned DEFAULT NULL"):
+	\DB::select("ALTER TABLE users ADD COLUMN `group_id` bigint(20) unsigned DEFAULT NULL");
+
+
+// Create fk FK_users_users_groups
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_users_users_groups'"))->first()) {
+	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `FK_users_users_groups` FOREIGN KEY (`group_id`) REFERENCES `users_groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,");
+}
+
+
 // Create fk users_photo_id_foreign
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='users_photo_id_foreign'"))->first()) {
 	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `users_photo_id_foreign` FOREIGN KEY (`photo_id`) REFERENCES `files` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
@@ -1171,6 +1216,12 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 \Schema::hasColumn('users', 'email_verified_at')?
 	\DB::select("ALTER TABLE users MODIFY COLUMN `email_verified_at` timestamp NULL DEFAULT NULL"):
 	\DB::select("ALTER TABLE users ADD COLUMN `email_verified_at` timestamp NULL DEFAULT NULL");
+
+
+// Create fk FK_users_users_groups
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_users_users_groups'"))->first()) {
+	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `FK_users_users_groups` FOREIGN KEY (`group_id`) REFERENCES `users_groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,");
+}
 
 
 // Create fk users_photo_id_foreign
@@ -1185,6 +1236,12 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 	\DB::select("ALTER TABLE users ADD COLUMN `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL");
 
 
+// Create fk FK_users_users_groups
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_users_users_groups'"))->first()) {
+	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `FK_users_users_groups` FOREIGN KEY (`group_id`) REFERENCES `users_groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,");
+}
+
+
 // Create fk users_photo_id_foreign
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='users_photo_id_foreign'"))->first()) {
 	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `users_photo_id_foreign` FOREIGN KEY (`photo_id`) REFERENCES `files` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
@@ -1195,6 +1252,12 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 \Schema::hasColumn('users', 'remember_token')?
 	\DB::select("ALTER TABLE users MODIFY COLUMN `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL"):
 	\DB::select("ALTER TABLE users ADD COLUMN `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
+
+
+// Create fk FK_users_users_groups
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_users_users_groups'"))->first()) {
+	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `FK_users_users_groups` FOREIGN KEY (`group_id`) REFERENCES `users_groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,");
+}
 
 
 // Create fk users_photo_id_foreign
@@ -1209,6 +1272,12 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 	\DB::select("ALTER TABLE users ADD COLUMN `created_at` timestamp NULL DEFAULT NULL");
 
 
+// Create fk FK_users_users_groups
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_users_users_groups'"))->first()) {
+	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `FK_users_users_groups` FOREIGN KEY (`group_id`) REFERENCES `users_groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,");
+}
+
+
 // Create fk users_photo_id_foreign
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='users_photo_id_foreign'"))->first()) {
 	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `users_photo_id_foreign` FOREIGN KEY (`photo_id`) REFERENCES `files` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
@@ -1221,7 +1290,68 @@ if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAI
 	\DB::select("ALTER TABLE users ADD COLUMN `updated_at` timestamp NULL DEFAULT NULL");
 
 
+// Create fk FK_users_users_groups
+if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='FK_users_users_groups'"))->first()) {
+	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `FK_users_users_groups` FOREIGN KEY (`group_id`) REFERENCES `users_groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,");
+}
+
+
 // Create fk users_photo_id_foreign
 if (! collect(\DB::select("SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='{$database}' AND CONSTRAINT_NAME='users_photo_id_foreign'"))->first()) {
 	\DB::select("ALTER TABLE `users` ADD CONSTRAINT `users_photo_id_foreign` FOREIGN KEY (`photo_id`) REFERENCES `files` (`id`) ON DELETE SET NULL ON UPDATE SET NULL");
 }
+
+
+// Create table users_groups
+\DB::select("CREATE TABLE IF NOT EXISTS `users_groups` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `permissions` longtext COLLATE utf8mb4_unicode_ci,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+
+// Create/Update column users_groups.id
+\Schema::hasColumn('users_groups', 'id')?
+	\DB::select("ALTER TABLE users_groups MODIFY COLUMN `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT"):
+	\DB::select("ALTER TABLE users_groups ADD COLUMN `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT");
+
+
+// Create/Update column users_groups.slug
+\Schema::hasColumn('users_groups', 'slug')?
+	\DB::select("ALTER TABLE users_groups MODIFY COLUMN `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL"):
+	\DB::select("ALTER TABLE users_groups ADD COLUMN `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
+
+
+// Create/Update column users_groups.name
+\Schema::hasColumn('users_groups', 'name')?
+	\DB::select("ALTER TABLE users_groups MODIFY COLUMN `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL"):
+	\DB::select("ALTER TABLE users_groups ADD COLUMN `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
+
+
+// Create/Update column users_groups.permissions
+\Schema::hasColumn('users_groups', 'permissions')?
+	\DB::select("ALTER TABLE users_groups MODIFY COLUMN `permissions` longtext COLLATE utf8mb4_unicode_ci"):
+	\DB::select("ALTER TABLE users_groups ADD COLUMN `permissions` longtext COLLATE utf8mb4_unicode_ci");
+
+
+// Create/Update column users_groups.created_at
+\Schema::hasColumn('users_groups', 'created_at')?
+	\DB::select("ALTER TABLE users_groups MODIFY COLUMN `created_at` datetime DEFAULT NULL"):
+	\DB::select("ALTER TABLE users_groups ADD COLUMN `created_at` datetime DEFAULT NULL");
+
+
+// Create/Update column users_groups.updated_at
+\Schema::hasColumn('users_groups', 'updated_at')?
+	\DB::select("ALTER TABLE users_groups MODIFY COLUMN `updated_at` datetime DEFAULT NULL"):
+	\DB::select("ALTER TABLE users_groups ADD COLUMN `updated_at` datetime DEFAULT NULL");
+
+
+// Create/Update column users_groups.deleted_at
+\Schema::hasColumn('users_groups', 'deleted_at')?
+	\DB::select("ALTER TABLE users_groups MODIFY COLUMN `deleted_at` datetime DEFAULT NULL"):
+	\DB::select("ALTER TABLE users_groups ADD COLUMN `deleted_at` datetime DEFAULT NULL");
