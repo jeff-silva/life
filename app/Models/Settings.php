@@ -11,7 +11,6 @@ class Settings extends \Illuminate\Database\Eloquent\Model
 	protected $fillable = ['id', 'name', 'value', 'created_at', 'updated_at'];
 
 	public static $settingsKeys = [
-		'app_model_files.storage_type',
 		'app.name',
 		'app.timezone',
 		'app.locale',
@@ -23,16 +22,20 @@ class Settings extends \Illuminate\Database\Eloquent\Model
 		'mail.mailers.smtp.password',
 		'mail.from.address',
 		'mail.from.name',
+		'app_model_files.storage_type',
+		'app_model_files.max_upload_size',
 	];
 
 
 	public static function saveAll($settings = [])
 	{
 		foreach($settings as $key => $value) {
+			dd($key, self::$settingsKeys);
 			if (! in_array($key, self::$settingsKeys)) continue;
 			if (is_array($value)) { $value = json_encode($value); }
 			$set = Settings::updateOrCreate(['name' => $key], ['value' => $value]);
 		}
+
 
 		return self::getAll();
 	}

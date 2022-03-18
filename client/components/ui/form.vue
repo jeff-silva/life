@@ -45,10 +45,10 @@ export default {
                         continue;
                     }
 
-                    else if (value && typeof value=="object" && value.type && value.base64) {
-                        let arr = value.base64.split(','), mime = arr[0].match(/:(.*?);/)[1], bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+                    else if (value && typeof value=="object" && (value.mime && value.content)) {
+                        let arr = value.content.split(','), mime = arr[0].match(/:(.*?);/)[1], bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
                         while(n--) { u8arr[n] = bstr.charCodeAt(n); }
-                        data.append(name, new File([u8arr], value.name, {type:value.type}));
+                        data.append(name, new File([u8arr], value.name, {type:value.mime}));
                         continue;
                     }
 

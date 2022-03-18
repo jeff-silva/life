@@ -7,6 +7,7 @@ export default function (ctx) {
     
     if (permissions.indexOf(route.name) == -1) {
         console.log(ctx);
-        return app.router.push("/admin");
+        // return app.router.push("/admin");
+        return app.router.go(-1);
     }
 }

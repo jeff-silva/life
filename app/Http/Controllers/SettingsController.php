@@ -13,6 +13,8 @@ class SettingsController extends Controller
 		]);
 
 		$this->defaultRoutes();
+		$this->route('post', '/save', '@saveAll');
+		$this->route('get', '/all', '@getAll');
 	}
 
 	public function saveAll() {

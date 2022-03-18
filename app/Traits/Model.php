@@ -12,12 +12,6 @@ trait Model
 
         static::saving(function($model) {
 
-            // $pkey = $model->getTable() .':save';
-            // if (! $model->userCan($pkey)) {
-            //     $pname = mb_strtolower(config("permissions.keys.{$pkey}"));
-            //     throw new \Exception("Você não possui permissão para {$pname}");
-            // }
-
             if (in_array('slug', $model->getFillable())) {
                 $model->slug = $model->slug? $model->slug: \Str::slug($model->name);
             }
@@ -107,6 +101,15 @@ trait Model
 
     public function upload($file)
     {
+        if (! $file->getSize()) return;
+        $max_upload_size = config('app_model_files.max_upload_size');
+        // dd($max_upload_size, $file->getSize(), get_class_methods($file));
+        
+        if ($file->getSize() > $max_upload_size) {
+            throw new \Exception('O arquivo enviado ultrapassou o tamanho permitido');
+            return false;
+        }
+
         $storage_type = config('app_model_files.storage_type'); // database | file
         $value = null;
 
