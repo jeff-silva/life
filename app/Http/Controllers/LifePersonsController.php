@@ -11,6 +11,10 @@ class LifePersonsController extends Controller
 		$this->middleware('auth:api', [
 			'except' => ['search', 'find'],
 		]);
+
+		$this->defaultRoutes();
+
+		$this->route('get', 'life-persons/cycle', '@cycle');
 	}
 
 	public function cycle()

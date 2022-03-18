@@ -11,6 +11,10 @@ class UserController extends Controller
 		$this->middleware('auth:api', [
 			'except' => ['search', 'find'],
 		]);
+
+		$this->defaultRoutes([
+			'except' => ['delete', 'restore', 'clone'],
+		]);
 	}
 
 	public function search()

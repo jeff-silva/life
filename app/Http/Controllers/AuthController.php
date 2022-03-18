@@ -17,6 +17,14 @@ class AuthController extends Controller
         $this->middleware('auth:api', [
             'except' => ['login', 'register', 'passwordResetStart', 'passwordResetChange'],
         ]);
+
+        $this->route('post', '/login', '@login');
+        $this->route('post', '/me', '@me');
+        $this->route('post', '/logout', '@logout');
+        $this->route('post', '/refresh', '@refresh');
+        $this->route('post', '/register', '@register');
+        $this->route('post', '/password-reset-start', '@passwordResetStart');
+        $this->route('post', '/password-reset-change', '@passwordResetChange');
     }
 
     /**

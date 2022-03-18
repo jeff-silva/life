@@ -11,6 +11,8 @@ class SettingsController extends Controller
 		$this->middleware('auth:api', [
 			'except' => [],
 		]);
+
+		$this->defaultRoutes();
 	}
 
 	public function saveAll() {

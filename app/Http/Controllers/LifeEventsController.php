@@ -11,6 +11,10 @@ class LifeEventsController extends Controller
 		$this->middleware('auth:api', [
 			'except' => ['search', 'find'],
 		]);
+
+		$this->defaultRoutes();
+
+		$this->route('get', 'life-events/test/{id}', '@test');
 	}
 
 	

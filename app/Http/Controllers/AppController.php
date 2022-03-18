@@ -11,7 +11,11 @@ class AppController extends Controller
 		$this->middleware('auth:api', [
 			'except' => ['test'],
 		]);
+
+		// $this->route('get', '/test', '@test');
+		$this->route('get', '/endpoints', '@endpoints');
 	}
+
 
 	public function test()
 	{
@@ -20,6 +24,7 @@ class AppController extends Controller
 		})->values();
 	}
 
+	
 	public function endpoints()
 	{
 		$routes = [];

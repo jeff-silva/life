@@ -3,18 +3,14 @@
         <div class="row g-0">
             <div class="col-6 p-2">
                 <ui-file v-model="uiFile"></ui-file>
-                <div><a href="">atualizar</a></div>
             </div>
 
             <div class="col-6 p-2">
-                <ui-model-select model-name="files" v-model="uiFileId"></ui-model-select>
-                <div class="mb-2"></div>
                 <ui-file-id v-model="uiFileId"></ui-file-id>
-                <pre>uiFileId: {{ uiFileId }}</pre>
             </div>
 
             <div class="col-12 p-2">
-                <ui-file-select></ui-file-select>
+                <ui-file-select v-model="uiFileId" select-field="id"></ui-file-select>
             </div>
         </div>
     </div>

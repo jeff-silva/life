@@ -11,6 +11,9 @@ class FilesController extends Controller
 		$this->middleware('auth:api', [
 			'except' => ['search', 'find', 'view'],
 		]);
+
+		$this->defaultRoutes();
+		$this->route('get', '/view/{slug}.{ext}', '@view');
 	}
 
 	public function view($slug, $ext=false) {

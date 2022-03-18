@@ -11,5 +11,7 @@ class LifeWorldsController extends Controller
 		$this->middleware('auth:api', [
 			'except' => ['search', 'find'],
 		]);
+
+		$this->defaultRoutes();
 	}
 }

@@ -169,6 +169,22 @@ trait Model
 	}
 
 
+    public function scopeNotEmpty($query, $fields)
+    {
+        $fields = is_array($fields)? $fields: [$fields];
+        if (empty($fields)) return;
+
+        $query->where(function($q) use($fields) {
+            foreach($fields as $i => $field) {
+                $q->orWhere(function($q) use($field) {
+                    $q->whereNotNull($field);
+                    $q->orWhere($field, '!=', '');
+                });
+            }
+        });
+    }
+
+
     public function scopeFindIdOrSlug($query, $slugid)
     {
         $fillable = $this->fillable;
@@ -308,8 +324,7 @@ trait Model
 
 
     public function scopeSearch($query, $params=null) {
-        $params = $params? $params: request()->all();
-        $params = array_merge([
+        $searchParams = array_merge([
             'q' => '',
             'page' => 1,
             'perpage' => 20,
@@ -317,11 +332,19 @@ trait Model
             'order' => 'desc',
             'deleted' => '',
             'limit' => '',
-        ], $this->searchParams(), $params);
+        ], $this->searchParams());
+
+        $params = $params? $params: request()->all();
+        $params = array_merge($searchParams, $params);
+
+        if ($query2 = $this->searchQuery($query, (object) $params)) {
+            $query = $query2;
+        }
 
         foreach($params as $field=>$value) {
             if (! $value) continue;
             if (! in_array($field, $this->fillable)) continue;
+            if (in_array($field, $searchParams)) continue;
 
             $operator = isset($params["{$field}_op"])? $params["{$field}_op"]: false;
 

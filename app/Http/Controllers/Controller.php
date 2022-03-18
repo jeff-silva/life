@@ -10,22 +10,73 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    
 
-    // static function automaticRoutes($model, $params=[]) {
-    //     $inst = app($model);
-    //     $name = (new \ReflectionClass($inst))->getShortName();
-    //     $prefix = (string) \Str::of($name)->studly()->kebab();
+    public function route($methods, $path, $callback)
+    {
+        // Se o argumento $callback conter um @ no início da string,
+        // o método insere o namespace completo da classe do controller automaticamente
+        // Ex.: $this->route('get', 'product/refresh/{id}', '@productRefresh');
+        if ('string'==gettype($callback) AND '@'==$callback[0]) {
+            $controller = (new \ReflectionClass($this))->getName();
+            $callback = "{$controller}{$callback}";
+        }
         
-    //     \Illuminate\Support\Facades\Route::get("/{$prefix}/search", "\App\Http\Controllers\\{$name}Controller@search")->name("{$prefix}-search");
-    //     \Illuminate\Support\Facades\Route::get("/{$prefix}/find/{id}", "\App\Http\Controllers\\{$name}Controller@find")->name("{$prefix}-find");
-    //     \Illuminate\Support\Facades\Route::post("/{$prefix}/save", "\App\Http\Controllers\\{$name}Controller@save")->name("{$prefix}-save");
-    //     \Illuminate\Support\Facades\Route::post("/{$prefix}/valid", "\App\Http\Controllers\\{$name}Controller@valid")->name("{$prefix}-valid");
-    //     \Illuminate\Support\Facades\Route::post("/{$prefix}/delete", "\App\Http\Controllers\\{$name}Controller@delete")->name("{$prefix}-delete");
-    //     \Illuminate\Support\Facades\Route::post("/{$prefix}/restore", "\App\Http\Controllers\\{$name}Controller@restore")->name("{$prefix}-restore");
-    //     \Illuminate\Support\Facades\Route::get("/{$prefix}/clone/{id}", "\App\Http\Controllers\\{$name}Controller@clone")->name("{$prefix}-clone");
-    //     \Illuminate\Support\Facades\Route::post("/{$prefix}/import", "\App\Http\Controllers\\{$name}Controller@import")->name("{$prefix}-import");
-    //     \Illuminate\Support\Facades\Route::get("/{$prefix}/export", "\App\Http\Controllers\\{$name}Controller@export")->name("{$prefix}-export");
-    // }
+        $prefix = (new \ReflectionClass($this))->getShortName();
+        $prefix = (string) \Str::of(str_replace('Controller', '', $prefix))->studly()->kebab();
+        $path = $prefix .'/'. trim($path, '/');
+        return \Illuminate\Support\Facades\Route::match($methods, $path, $callback);
+    }
+
+
+    // Gera automaticamente os métodos abaixo para todos os controllers:
+    // search, find, save, valid, delete, restore, clone, import, export
+    public function defaultRoutes($params=[])
+    {
+        $params = (object) array_merge([
+            'except' => [],
+        ], $params);
+
+        $name = (new \ReflectionClass($this->model))->getShortName();
+        $prefix = (string) \Str::of($name)->studly()->kebab();
+
+        if (! in_array('search', $params->except)) {
+            $this->route('get', "/search", '@search')->name("{$prefix}-search");
+        }
+
+        if (! in_array('find', $params->except)) {
+            $this->route('get', "/find/{id}", '@find')->name("{$prefix}-find");
+        }
+
+        if (! in_array('save', $params->except)) {
+            $this->route('post', "/save", '@save')->name("{$prefix}-save");
+        }
+
+        if (! in_array('valid', $params->except)) {
+            $this->route('post', "/valid", '@valid')->name("{$prefix}-valid");
+        }
+
+        if (! in_array('delete', $params->except)) {
+            $this->route('post', "/delete", '@delete')->name("{$prefix}-delete");
+        }
+
+        if (! in_array('restore', $params->except)) {
+            $this->route('post', "/restore", '@restore')->name("{$prefix}-restore");
+        }
+
+        if (! in_array('clone', $params->except)) {
+            $this->route('get', "/clone/{id}", '@clone')->name("{$prefix}-clone");
+        }
+
+        if (! in_array('import', $params->except)) {
+            $this->route('post', "/import", '@import')->name("{$prefix}-import");
+        }
+
+        if (! in_array('export', $params->except)) {
+            $this->route('get', "/export", '@export')->name("{$prefix}-export");
+        }
+    }
+
 
     public function search()
     {

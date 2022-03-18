@@ -63,15 +63,56 @@ class Files extends \Illuminate\Database\Eloquent\Model
 	}
 
 
+	public function searchParams()
+	{
+		return [
+			'folder' => '',
+		];
+	}
+
+
+	public function searchQuery($query, $params)
+	{
+		if ($params->folder) {
+			$query->where(function($q) use($params) {
+				$q->where('folder', $params->folder);
+				$q->orWhere('folder', 'like', "{$params->folder}%");
+			});
+		}
+
+		// dd($query->toRawSql());
+
+		return $query;
+	}
+
+
 	public static function folders()
 	{
-		$folders = self::select(['folder'])
-			->whereNotNull('folder')
-			->where('folder', '!=', '')
+		$files = self::query()
+			->select(['folder'])
+			->notEmpty(['folder'])
+			->orderBy('folder', 'asc')
 			->groupBy('folder')
 			->get();
 
-		return $folders;
+		$folders = [''];
+
+		foreach($files as $file) {
+			$folderpath = [];
+			foreach(explode("/", $file->folder) as $folder) {
+				$folderpath[] = $folder;
+				$folders[] = implode("/", $folderpath);
+			}
+		}
+
+		$folders = array_unique($folders);
+		$folders = array_values($folders);
+
+		return array_map(function($folder) {
+			return [
+				'name' => $folder,
+			];
+		}, $folders);
 	}
 
 

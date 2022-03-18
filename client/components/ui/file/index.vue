@@ -6,7 +6,7 @@
             <div class="flex-grow-1" v-if="!props.value">
                 <button type="button" class="btn btn-light w-100" @click="fileBrowser()">
                     <div v-if="props.value">{{ props.value.name }}</div>
-                    <div v-else><i class="fas fa-fw fa-upload"></i> Browse</div>
+                    <div v-else>Browse</div>
                 </button>
             </div>
 
