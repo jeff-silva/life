@@ -50,6 +50,20 @@ class AppController extends Controller
 		$return = [];
 
 		$return[] = [
+			'name' => 'Usuários',
+			'items' => (new \App\Models\User)->select(['id', 'name'])->search()->get()->transform(function($item) {
+				return ['name' => $item->name, 'url' => "/admin/user/{$item->id}"];
+			}),
+		];
+
+		$return[] = [
+			'name' => 'Grupos de usuários',
+			'items' => (new \App\Models\UsersGroups)->select(['id', 'name'])->search()->get()->transform(function($item) {
+				return ['name' => $item->name, 'url' => "/admin/users-groups/{$item->id}"];
+			}),
+		];
+
+		$return[] = [
 			'name' => 'Arquivos',
 			'items' => (new \App\Models\Files)->select(['id', 'name'])->search()->get()->transform(function($item) {
 				return ['name' => $item->name, 'url' => "/admin/files/{$item->id}"];
@@ -64,16 +78,30 @@ class AppController extends Controller
 		];
 
 		$return[] = [
-			'name' => 'Petqr Coleiras',
-			'items' => (new \App\Models\PetqrCollars)->select(['id', 'name'])->search()->get()->transform(function($item) {
-				return ['name' => $item->name, 'url' => "/admin/petqr-collars/{$item->id}"];
+			'name' => 'Life Events',
+			'items' => (new \App\Models\LifeEvents)->select(['id', 'name'])->search()->get()->transform(function($item) {
+				return ['name' => $item->name, 'url' => "/admin/life-events/{$item->id}"];
 			}),
 		];
 
 		$return[] = [
-			'name' => 'Usuários',
-			'items' => (new \App\Models\User)->select(['id', 'name'])->search()->get()->transform(function($item) {
-				return ['name' => $item->name, 'url' => "/admin/user/{$item->id}"];
+			'name' => 'Life Worlds',
+			'items' => (new \App\Models\LifeEvents)->select(['id', 'name'])->search()->get()->transform(function($item) {
+				return ['name' => $item->name, 'url' => "/admin/life-worlds/{$item->id}"];
+			}),
+		];
+
+		$return[] = [
+			'name' => 'Life Pessoas',
+			'items' => (new \App\Models\LifePersons)->select(['id', 'name'])->search()->get()->transform(function($item) {
+				return ['name' => $item->name, 'url' => "/admin/life-persons/{$item->id}"];
+			}),
+		];
+
+		$return[] = [
+			'name' => 'Life Interações',
+			'items' => (new \App\Models\LifePersonsInteractions)->select(['id', 'name'])->search()->get()->transform(function($item) {
+				return ['name' => $item->name, 'url' => "/admin/life-persons-interactions/{$item->id}"];
 			}),
 		];
 

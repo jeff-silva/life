@@ -32,6 +32,12 @@
 
 <script>
 export default {
+    head() {
+		return {
+			title: "Checks",
+		};
+	},
+
     data() {
         return {
             colorUse: false,

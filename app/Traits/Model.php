@@ -12,11 +12,11 @@ trait Model
 
         static::saving(function($model) {
 
-            $pkey = $model->getTable() .':save';
-            if (! $model->userCan($pkey)) {
-                $pname = mb_strtolower(config("permissions.keys.{$pkey}"));
-                throw new \Exception("Você não possui permissão para {$pname}");
-            }
+            // $pkey = $model->getTable() .':save';
+            // if (! $model->userCan($pkey)) {
+            //     $pname = mb_strtolower(config("permissions.keys.{$pkey}"));
+            //     throw new \Exception("Você não possui permissão para {$pname}");
+            // }
 
             if (in_array('slug', $model->getFillable())) {
                 $model->slug = $model->slug? $model->slug: \Str::slug($model->name);
@@ -40,7 +40,7 @@ trait Model
                 }
 
                 if ($file = request()->file($name)) {
-                    $value = $this->upload($file);
+                    $value = $model->upload($file);
                 }
 
                 $model->attributes[ $name ] = $value;

@@ -1,7 +1,7 @@
 <template>
     <div class="ui-autocomplete" style="position:relative;">
 
-        <slot name="input">
+        <slot name="input" :params="props.params" :loading="loading" :search="search">
             <div class="input-group form-control p-0">
                 <input type="text" class="form-control border-0 shadow-none" v-model="props.params.q" :placeholder="placeholder" @keyup.enter="search()">
 
@@ -14,7 +14,7 @@
         </slot>
 
         <el-collapse-transition>
-            <div v-if="response && props.responseShow" :style="`${responseFloating? 'position:absolute; top:100%; left:0; width:100%; z-index:9;': ''}`">
+            <div v-if="response && props.responseShow" :style="`${responseFloating? 'position:absolute; top:100%; left:0; width:100%; z-index:9; margin-top:10px; max-height:300px; overflow:auto;': ''}`">
                 <slot name="response" :response="response"></slot>
             </div>
         </el-collapse-transition>

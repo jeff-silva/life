@@ -10,3 +10,13 @@
         <br>
     </div>
 </template>
+
+<script>
+export default {
+    head() {
+		return {
+			title: "Principal",
+		};
+	},
+}
+</script>

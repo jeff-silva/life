@@ -30,14 +30,14 @@ Vue.prototype.$confirm = function(html) {
     });
 };
 
-let helper = {
+let helpers = {
     dateFormat: (value, format='DD/MM/YYYY - HH:mm') => {
         let d = moment(value);
         if (!d.isValid()) return '';
         return d.format(format);
     },
 
-    strFileSize(bytes, dp=0) {
+    fileSize: (bytes, dp=0) => {
         if (!bytes || isNaN(+bytes)) return '';
         const si = true;
         const thresh = si ? 1000 : 1024;
@@ -51,7 +51,7 @@ let helper = {
         return bytes.toFixed(dp) + ' ' + units[u];
     },
 
-    numberFormat(number, decimals=2, dec=',', mil='.') {
+    numberFormat: (number, decimals=2, dec=',', mil='.') => {
         number = parseFloat(number);
         number = isNaN(number)? 0: number;
 
@@ -60,25 +60,10 @@ let helper = {
             maximumFractionDigits: decimals,
         }).format(number);
     },
-
-    base64ToFile(base64) {
-        if ("data:"!=(base64||"").substring(0, 5)) return false;
-        let meta = base64.split('base64,').shift();
-        let mime = meta.replace(/data:(.+?);/g, '$1');
-        let fname = meta.replace(/fname:(.+?);/g, '$1');
-        console.log({meta, mime, fname});
-        return false;
-
-        // let e = base64.split(/data:|;base64,/g).filter(v => v);
-        // let file = {type:e[0]};
-        // file.ext = e[0].split('/').pop().toLowerCase().replace('jpeg', 'jpg').replace('svg+xml', 'svg');
-        // file.name = e[1].substr(0, 20).replace(/[^a-zA-Z]/g, '') +`.${file.ext}`;
-        // return file;
-    },
 };
 
-Vue.prototype.$helper = helper;
-for(let name in helper) Vue.filter(name, helper[name]);
+Vue.prototype.$helpers = helpers;
+for(let name in helpers) Vue.filter(name, helpers[name]);
 
 Vue.prototype.$log = function() {
     Array.prototype.slice.call(arguments).forEach(item => {

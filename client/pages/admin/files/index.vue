@@ -25,7 +25,7 @@
 
 <script>
 export default {
-    layout: "default/admin",
+    layout: "admin",
     middleware: ['auth', 'permission'],
 
     head() {

@@ -29,9 +29,7 @@
                                 </a>
                             </div>
 
-                            <div class="flex-grow-1">
-                                <slot name="header">&nbsp;</slot>
-                            </div>
+                            <slot name="header">&nbsp;</slot>
                         </div>
                     </div>
 

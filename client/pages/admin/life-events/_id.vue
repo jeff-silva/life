@@ -26,7 +26,7 @@
 		
 		<ui-field label="Chance de erro" :error="errorFields.chance">
 			<template #info>
-				<div v-if="value.chance">{{ $helper.numberFormat(100/value.chance, 1) }}% &nbsp; (1 em {{ value.chance }})</div>
+				<div v-if="value.chance">{{ $helpers.numberFormat(100/value.chance, 1) }}% &nbsp; (1 em {{ value.chance }})</div>
 				<div v-else>100%</div>
 			</template>
 			<input type="number" class="form-control" v-model.number="value.chance">
@@ -46,7 +46,7 @@
 
 <script>
 export default {
-	layout: "default/admin",
+	layout: "admin",
 	middleware: ['auth', 'permission'],
 	
 	head() {

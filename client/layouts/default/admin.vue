@@ -16,7 +16,21 @@
             </template>
 
             <template #header>
-                <ui-autocomplete action="/api/app/search" :params="{q:'', limit:3}" style="max-width:250px;">
+                <div class="flex-grow-1"></div>
+
+                <ui-autocomplete action="/api/app/search" :params="{q:'', limit:3}" style="max-width:300px;" class="d-none d-md-block">
+                    <template #input="{ params, loading, search }">
+                        <div class="input-group form-control border-0 shadow-none p-0">
+                            <input type="text" class="form-control bg-light border-0 shadow-none" v-model="params.q" placeholder="Buscar no sistema" @keyup.enter="search()">
+
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-light border-0 rounded-0" @click="search()" v-loading="loading">
+                                    <i class="fas fa-fw fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+
                     <template #response="{loading, response}">
                         <div class="bg-white shadow-sm">
                             <div v-for="r in response" v-if="r.items.length">

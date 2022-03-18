@@ -16,16 +16,21 @@
 export default {
     data() {
         return {
-            navItems: [
-                {label:"Home", to:"/admin/dev/", children:[]},
-                {label:"Endpoints", to:"/admin/dev/endpoints/", children:[]},
-                {label:"Components", children:[
-                    {label:"Checks", to:"/admin/dev/components-check/", children:[]},
-                    {label:"Dropdown", to:"/admin/dev/components-dropdown/", children:[]},
-                ]},
-                {label:"Admin", to:"/admin/", children:[]},
-            ],
+            navItems: this.getComponents(),
         };
+    },
+
+    methods: {
+        getComponents() {
+            let files = require.context('./index', true, /\.vue$/);
+            return files.keys().map(key => {
+                let item = files(key).default.head();
+                item.label = item.title;
+                delete item.title;
+                item.to = `/admin/dev/${key}`.replace(/(\.\/)|(\.vue)|(index)/g, '');
+                return item;
+            });
+        },
     },
 }
 </script>

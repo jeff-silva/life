@@ -25,7 +25,7 @@
 <script>
 export default {
     props: {
-        value: {default:"", type:[Boolean, Number, String, Array, Object]},
+        value: {default:"", type:[Boolean, Number, String]},
         multiple: {default:false},
         disabled: {default:false},
         loadingText: {default:"Carregando"},
@@ -52,7 +52,9 @@ export default {
     methods: {
         search() {
             this.loading = true;
-            this.$axios.get(`/api/${this.modelName}/search`, {params:this.searchParams}).then(resp => {
+            let params = {...this.searchParams};
+            delete params.id;
+            this.$axios.get(`/api/${this.modelName}/search`, {params}).then(resp => {
                 this.loading = false;
                 this.results = resp.data;
             });

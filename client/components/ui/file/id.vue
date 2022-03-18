@@ -1,34 +1,20 @@
 <template>
-    <div>
-        
-        <div class="d-flex">
-            <div class="flex-grow-1">
-                <button type="button" class="btn btn-light w-100" @click="fileBrowser()">
-                    {{ file? file.name: 'Upload' }}
+    <ui-file @file-get="fileUpload=$event" @file-clear="fileUpload=false">
+        <template #actions v-if="fileUpload">
+            <div class="ms-2">
+                <button type="button" class="btn btn-success" @click="upload()">
+                    <i class="fas fa-fw fa-upload"></i>
                 </button>
             </div>
+        </template>
 
-            <div class="ms-2" v-if="props.file">
-                <a :href="props.file.url" :download="`${props.file.name}.${props.file.ext}`" class="btn btn-light w-100">
-                    <i class="fas fa-fw fa-download"></i>
-                </a>
+        <template #preview="{ value, previewHeight }" v-if="props.file">
+            <div v-if="props.file && props.file.type=='image'">
+                <img :src="props.file.url" alt="" :style="`height:${previewHeight}; max-width:300px; object-fit:cover;`">
             </div>
-
-            <div class="ms-2" v-if="props.file">
-                <button type="button" class="btn btn-light w-100" @click="props.file=false">
-                    <i class="fas fa-fw fa-times"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="mt-2" style="border:dashed 5px #eee; height:250px; display:flex; align-items:center; justify-content:center;">
-            <div v-if="props.file" style="position:relative; height:90%;">
-                <img :src="props.file.url" alt="" style="height:100%; max-width:300px; object-fit:cover;" v-if="props.file.type=='image'">
-            </div>
-
-            <div v-else>Arraste e solte o arquivo aqui</div>
-        </div>
-    </div>
+            <div v-else style="font-size:30px; text-transform:uppercase;">{{ props.file.ext }}</div>
+        </template>
+    </ui-file>
 </template>
 
 <script>
@@ -55,6 +41,7 @@ export default {
 
     data() {
         return {
+            fileUpload: false,
             props: JSON.parse(JSON.stringify(this.$props)),
         };
     },
@@ -67,21 +54,36 @@ export default {
             });
         },
 
-        fileBrowser() {
-            Object.assign(document.createElement('input'), {
-                type: "file",
-                onchange: (ev) => {
-                    let file = ev.target.files[0];
-                    let data = new FormData();
-                    data.append('name', file.name.split('.').shift());
-                    data.append('content', file);
-                    this.$axios.post('/api/files/save', data).then(resp => {
-                        this.props.value = resp.data.id;
-                        this.props.file = resp.data;
-                    });
-                },
-            }).click();;
+        upload() {
+            if (!this.fileUpload) return;
+            let data = new FormData();
+            data.append('content', this.fileUpload);
+            this.$axios.post('/api/files/save', data).then(resp => {
+                this.props.value = resp.data.id;
+                this.props.file = resp.data;
+                this.fileUpload = false;
+            });
         },
+
+        // fileBrowser() {
+        //     Object.assign(document.createElement('input'), {
+        //         type: "file",
+        //         onchange: (ev) => {
+        //             let file = ev.target.files[0];
+        //             let data = new FormData();
+        //             data.append('name', file.name.split('.').shift());
+        //             data.append('content', file);
+        //             this.$axios.post('/api/files/save', data).then(resp => {
+        //                 this.props.value = resp.data.id;
+        //                 this.props.file = resp.data;
+        //             });
+        //         },
+        //     }).click();;
+        // },
+    },
+
+    mounted() {
+        this.fileFind();
     },
 }
 </script>

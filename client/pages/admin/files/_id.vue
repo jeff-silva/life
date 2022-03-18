@@ -16,7 +16,6 @@
         
         <ui-field label="Arquivo" layout="horizontal">
             <ui-file v-model="value.content"></ui-file>
-            <ui-file-preview v-model="value" class="mt-2"></ui-file-preview>
         </ui-field>
 
         <ui-modal :value="$route.query.contentEdit" width="90vw" v-if="value.type=='image'" @close="$router.push({query:{}})">
@@ -50,7 +49,7 @@
 
 <script>
 export default {
-    layout: "default/admin",
+    layout: "admin",
     middleware: ['auth', 'permission'],
 
     head() {
