@@ -25,7 +25,8 @@ class Controller extends BaseController
         $prefix = (new \ReflectionClass($this))->getShortName();
         $prefix = (string) \Str::of(str_replace('Controller', '', $prefix))->studly()->kebab();
         $path = $prefix .'/'. trim($path, '/');
-        return \Illuminate\Support\Facades\Route::match($methods, $path, $callback);
+
+        return \Illuminate\Support\Facades\Route::match($methods, $path, $callback)->middleware(['permission']);
     }
 
 

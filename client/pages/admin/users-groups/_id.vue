@@ -45,7 +45,7 @@ export default {
 
 	methods: {
 		permissionsList() {
-			this.$axios.get('/api/app/test').then(resp => {
+			this.$axios.get('/api/users-groups/permissions').then(resp => {
 				this.permissions = resp.data;
 			});
 		},

@@ -13,5 +13,14 @@ class UsersGroupsController extends Controller
 		]);
 
 		$this->defaultRoutes();
+		$this->route('get', '/permissions', '@permissions');
+	}
+
+
+	public function permissions()
+	{
+		return collect(config('permissions.keys'))->map(function($name, $key) {
+			return ['key' => $key, 'name' => $name];
+		})->values();
 	}
 }
