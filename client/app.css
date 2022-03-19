@@ -57,6 +57,9 @@ html, body {font-family: 'Assistant', sans-serif;}
 /* Element UI: .el-input__inner inside .form-control */
 .form-control .el-input__inner {border:none;}
 
+/* Element UI: Ugly tab item padding */
+.el-tabs__item {padding: 0 20px !important;}
+
 /* Bootstrap checkboxes and radios */
 input[type=checkbox].form-control,
 input[type=radio].form-control {--color: var(--bs-primary); display: inline-block; vertical-align: middle; appearance: none !important; box-shadow: none; padding: 0 !important; margin: 0 !important; cursor: pointer; outline: solid 3px var(--color); border: solid 3px #fff; width: 16px; height: 16px; opacity: .7;}

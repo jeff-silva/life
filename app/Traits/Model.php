@@ -101,11 +101,8 @@ trait Model
 
     public function upload($file)
     {
-        if (! $file->getSize()) return;
-        $max_upload_size = config('app_model_files.max_upload_size');
-        // dd($max_upload_size, $file->getSize(), get_class_methods($file));
-        
-        if ($file->getSize() > $max_upload_size) {
+        $max_upload_size = intval(config('app_model_files.max_upload_size'));
+        if ($file->getSize() AND $file->getSize() > $max_upload_size) {
             throw new \Exception('O arquivo enviado ultrapassou o tamanho permitido');
             return false;
         }

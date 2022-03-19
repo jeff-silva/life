@@ -5,11 +5,11 @@
                 <nuxt></nuxt>
             </template>
 
-            <template #nav-header>
+            <!-- <template #nav-header>
                 <div class="py-5 text-center border-bottom">
                     Bem vindo {{ $auth.user.name }}
                 </div>
-            </template>
+            </template> -->
 
             <template #nav-body>
                 <ui-nav :items="$store.state.admin.menu" @select="$refs.app.drawerClose()"></ui-nav>
@@ -18,7 +18,7 @@
             <template #header>
                 <div class="flex-grow-1"></div>
 
-                <ui-autocomplete action="/api/app/search" :params="{q:'', limit:3}" style="max-width:300px;" class="d-none d-md-block">
+                <ui-autocomplete action="/api/app/search" :params="{q:'', limit:3}" style="max-width:300px;" class="ms-3 d-none d-md-block">
                     <template #input="{ params, loading, search }">
                         <div class="input-group form-control border-0 shadow-none p-0">
                             <input type="text" class="form-control bg-light border-0 shadow-none" v-model="params.q" placeholder="Buscar no sistema" @keyup.enter="search()">
@@ -44,6 +44,39 @@
                         </div>
                     </template>
                 </ui-autocomplete>
+
+                <div class="ms-3">
+                    <ui-dropdown type="bottom-right">
+                        <i class="fas fa-fw fa-comment"></i>
+
+                        <template #dropdown>
+                            Conversas
+                        </template>
+                    </ui-dropdown>
+                </div>
+                
+                <div class="ms-3">
+                    <ui-dropdown type="bottom-right">
+                        <i class="fas fa-fw fa-bullhorn"></i>
+
+                        <template #dropdown>
+                            Notificações
+                        </template>
+                    </ui-dropdown>
+                </div>
+                
+                <div class="ms-3">
+                    <ui-dropdown type="bottom-right">
+                        {{ $auth.user.name }}
+
+                        <template #dropdown>
+                            <div class="list-group list-group-flush" style="width:250px;">
+                                <nuxt-link to="/admin/user/me" class="list-group-item p-2">Meus dados</nuxt-link>
+                                <ui-auth-logout class="list-group-item p-2">Sair</ui-auth-logout>
+                            </div>
+                        </template>
+                    </ui-dropdown>
+                </div>
             </template>
         </ui-app>
     </div>

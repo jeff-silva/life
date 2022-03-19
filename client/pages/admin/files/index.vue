@@ -16,7 +16,7 @@
                 <td>
                     <div class="fw-bold">{{ item.name }}</div>
                     <div v-if="item.folder"><small>/{{ item.folder }}</small></div>
-                    <div><small>{{ item.size|strFileSize }}</small></div>
+                    <div><small>{{ item.size|fileSize }}</small></div>
                 </td>
             </template>
         </ui-model-search>

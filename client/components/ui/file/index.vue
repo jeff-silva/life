@@ -6,7 +6,7 @@
             <div class="flex-grow-1" v-if="!props.value">
                 <button type="button" class="btn btn-light w-100" @click="fileBrowser()">
                     <div v-if="props.value">{{ props.value.name }}</div>
-                    <div v-else>Browse</div>
+                    <div v-else><i class="fas fa-fw fa-file"></i> Browse</div>
                 </button>
             </div>
 
@@ -26,21 +26,19 @@
         <!-- Preview -->
         <div class="bg-light mt-2 d-flex align-items-center justify-content-center" :style="`height:calc(${previewHeight} + 30px);`" v-if="props.preview">
             <slot name="preview" :value="props.value" :preview-height="previewHeight">
-                <div v-if="props.value && props.value.type.includes('image')">
-                    <img :src="props.value.content" alt="" :style="`height:${previewHeight}; max-width:300px; object-fit:cover;`">
-                    <small class="d-block text-center">{{ props.value.size|fileSize }}</small>
+                <div v-if="_file && (_file.type||'').includes('image')">
+                    <img :src="_file.url || _file.content" alt="" :style="`height:${previewHeight}; max-width:300px; object-fit:cover;`">
+                    <small class="d-block text-center">{{ _file.size|fileSize }}</small>
                 </div>
 
-                <div v-else-if="props.value">
-                    <div style="font-size:40px; line-height:35px; text-transform:uppercase;">{{ props.value.ext }}</div>
-                    <small class="d-block text-center">{{ props.value.size|fileSize }}</small>
+                <div v-else-if="_file">
+                    <div style="font-size:40px; line-height:35px; text-transform:uppercase;">{{ _file.ext }}</div>
+                    <small class="d-block text-center">{{ _file.size|fileSize }}</small>
                 </div>
 
                 <div v-else>Arraste o arquivo aqui</div>
             </slot>
         </div>
-
-        <!-- <pre style="max-width:500px; overflow:auto;">{{ props.value }}</pre> -->
     </div>
 </template>
 
@@ -49,6 +47,7 @@ export default {
     props: {
         value: {default: false, type: [Boolean, Object]},
         folder: {default: ""},
+        file: {default: false, type: [Boolean, Object]},
         preview: {default: true},
         previewHeight: {default: "200px"},
     },
@@ -65,6 +64,18 @@ export default {
             for(let i in value) { this.$emit(`update:${i}`, value[i]); }
             setTimeout(() => { this.__preventRecursive = false; }, 10);
         }},
+    },
+
+    computed: {
+        _file() {
+            if (this.props.value) {
+                return this.props.value;
+            }
+            else if (this.props.file) {
+                return this.props.file;
+            }
+            return false;
+        },
     },
 
     data() {
@@ -88,7 +99,7 @@ export default {
             r.readAsDataURL(file);
             r.onload = () => {
                 this.props.value = {
-                    name: file.name.replace(/(.+)\.[a-zA-Z0-9]{2,}$/g, '$1'),
+                    name: file.name,
                     folder: this.props.folder,
                     size: file.size,
                     mime: file.type,

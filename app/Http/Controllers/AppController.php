@@ -14,6 +14,7 @@ class AppController extends Controller
 
 		// $this->route('get', '/test', '@test');
 		$this->route('get', '/endpoints', '@endpoints');
+		$this->route('get', '/dashboard', '@dashboard');
 	}
 
 
@@ -30,8 +31,6 @@ class AppController extends Controller
 		$routes = [];
 
 		foreach(\Route::getRoutes() as $item) {
-			// dd($item->parameterNames(), get_class_methods($item));
-
 			$route = (object) [
 				'uri' => $item->uri(),
 				'methods' => $item->methods(),
@@ -47,6 +46,14 @@ class AppController extends Controller
 		}
 
 		return $routes;
+	}
+
+
+	public function dashboard()
+	{
+		$return['users'] = \App\Models\User::select(['id'])->count();
+		$return['filesSize'] = \App\Models\Files::select(['size'])->get()->sum('size');
+		return $return;
 	}
 
 

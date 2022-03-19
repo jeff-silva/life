@@ -29,15 +29,21 @@ class Settings extends \Illuminate\Database\Eloquent\Model
 
 	public static function saveAll($settings = [])
 	{
-		foreach($settings as $key => $value) {
-			dd($key, self::$settingsKeys);
-			if (! in_array($key, self::$settingsKeys)) continue;
-			if (is_array($value)) { $value = json_encode($value); }
-			$set = Settings::updateOrCreate(['name' => $key], ['value' => $value]);
+		$return = [];
+
+		foreach(self::$settingsKeys as $key) {
+			$value = isset($settings[ $key ])? $settings[ $key ]: false;
+
+			$testkey = str_replace('.', '_', $key);
+			if (isset($settings[ $testkey ])) {
+				$value = $settings[ $testkey ];
+			}
+
+			Settings::updateOrCreate(['name' => $key], ['value' => $value]);
+			$return[ $key ] = $value;
 		}
 
-
-		return self::getAll();
+		return $return;
 	}
 
 

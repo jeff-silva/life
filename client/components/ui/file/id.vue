@@ -1,18 +1,11 @@
 <template>
-    <ui-file @file-get="fileUpload=$event" @file-clear="fileUpload=false">
+    <ui-file @file-get="fileUpload=$event" @file-clear="fileUpload=false" :file="file">
         <template #actions v-if="fileUpload">
             <div class="ms-2">
                 <button type="button" class="btn btn-success" @click="upload()">
-                    <i class="fas fa-fw fa-upload"></i>
+                    <i class="fas fa-fw fa-upload"></i> Enviar
                 </button>
             </div>
-        </template>
-
-        <template #preview="{ value, previewHeight }" v-if="props.file">
-            <div v-if="props.file && props.file.type=='image'">
-                <img :src="props.file.url" alt="" :style="`height:${previewHeight}; max-width:300px; object-fit:cover;`">
-            </div>
-            <div v-else style="font-size:30px; text-transform:uppercase;">{{ props.file.ext }}</div>
         </template>
     </ui-file>
 </template>
