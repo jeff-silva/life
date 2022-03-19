@@ -50,7 +50,9 @@
                         <i class="fas fa-fw fa-comment"></i>
 
                         <template #dropdown>
-                            Conversas
+                            <div class="shadow-sm p-2" style="width:200px;">
+                                Conversas
+                            </div>
                         </template>
                     </ui-dropdown>
                 </div>
@@ -60,7 +62,9 @@
                         <i class="fas fa-fw fa-bullhorn"></i>
 
                         <template #dropdown>
-                            Notificações
+                            <div class="shadow-sm p-2" style="width:200px;">
+                                Notificações
+                            </div>
                         </template>
                     </ui-dropdown>
                 </div>
