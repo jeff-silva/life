@@ -98,6 +98,22 @@ class User extends Authenticatable implements JWTSubject
 	}
 
 
+	public function searchQuery($query)
+	{
+		$query->select(['users.id', 'users.name', 'users.email']);
+
+		$query->withJoin('photo', ['url'], [
+			'method' => 'leftJoin',
+			'as' => 'photo',
+		]);
+
+		$query->withJoin('group', ['id', 'name'], [
+			'method' => 'leftJoin',
+			'as' => 'group',
+		]);
+	}
+
+
 	public function page()
 	{
 		return $this->belongsTo(App\Models\Pages::class, 'owner_id', 'id');

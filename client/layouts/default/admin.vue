@@ -50,7 +50,7 @@
                         <i class="fas fa-fw fa-comment"></i>
 
                         <template #dropdown>
-                            <div class="shadow-sm p-2" style="width:200px;">
+                            <div class="p-2" style="width:200px;">
                                 Conversas
                             </div>
                         </template>
@@ -62,7 +62,7 @@
                         <i class="fas fa-fw fa-bullhorn"></i>
 
                         <template #dropdown>
-                            <div class="shadow-sm p-2" style="width:200px;">
+                            <div class="p-2" style="width:200px;">
                                 Notificações
                             </div>
                         </template>

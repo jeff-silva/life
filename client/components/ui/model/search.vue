@@ -331,10 +331,6 @@ export default {
 .ui-model-search [data-order="asc"]:after {content: "↓"; float: right;}
 .ui-model-search [data-order="desc"]:after {content: "↑"; float: right;}
 
-.ui-model-search-table-actions {
-    width: 150px;
-}
-
 .ui-model-search-table-actions > * {
     width: 100%;
     margin-bottom: 8px;
@@ -342,5 +338,11 @@ export default {
 
 .ui-model-search-table-actions > *:last-child {
     margin-bottom: 0;
+}
+
+@media (min-width: 992px) {
+    .ui-model-search-table-actions {
+        width: 150px;
+    }
 }
 </style>

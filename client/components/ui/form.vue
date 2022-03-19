@@ -1,6 +1,6 @@
 <template>
-    <form action="" @submit.prevent="submit()">
-        <slot :loading="loading" :response="response" :error="error" :error-fields="errorFields"></slot>
+    <form action="" @submit.prevent="submit()" @change="formChanged=true">
+        <slot :loading="loading" :response="response" :error="error" :error-fields="errorFields" :submit="submit"></slot>
     </form>
 </template>
 
@@ -12,6 +12,7 @@ export default {
         action: {default:""},
         mountedSubmit: {default:false, type:Boolean},
         successText: {default:""},
+        preventMessage: {default:"Formulário sofreu alterações, deseja prosseguir?", type:[Boolean, String]},
     },
 
     data() {
@@ -20,6 +21,7 @@ export default {
             response: false,
             error: false,
             errorFields: {},
+            formChanged: false,
         };
     },
 
@@ -93,12 +95,22 @@ export default {
 
             return respData;
         },
+
+        // TODO: encontrar meio de fazer o preventRedirect para VueRouter
+        onBeforeunload(ev) {
+            if (!this.preventMessage || !this.formChanged) return;
+            (ev || window.event).returnValue = this.preventMessage;
+            return this.preventMessage;
+        },
     },
 
     mounted() {
-        if (this.mountedSubmit) {
-            this.submit();
-        }
-    }
+        window.addEventListener("beforeunload", this.onBeforeunload);
+        if (this.mountedSubmit) { this.submit(); }
+    },
+
+    beforeDestroy() {
+        window.removeEventListener("beforeunload", this.onBeforeunload);
+    },
 }
 </script>

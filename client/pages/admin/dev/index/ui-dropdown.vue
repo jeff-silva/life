@@ -41,7 +41,7 @@ export default {
                 `\t\t<div class="p-2" style="width:150px;">`,
                 `\t\t\t<div>Big</div>`,
                 `\t\t\t<div>Content</div>`,
-                `\t\t\t<div>Example</div>`,
+                `\t\t\t<div>${this.bind.type}</div>`,
                 `\t\t</div>`,
                 `\t</template>`,
                 `</ui-dropdown>`,

@@ -7,12 +7,7 @@
             </template>
 
             <template #table-row="{item}">
-                <td>
-                    <el-image :src="item.url" fit="cover" lazy style="width:50px; height:50px; border-radius:50%;" v-if="item.type=='image'">
-                        <div slot="error" style="background:#ddd; height:50px;"></div>
-                    </el-image>
-                    <div v-else style="width:50px; height:50px; background:#eee; display:flex; align-items:center; justify-content:center;">{{ item.ext }}</div>
-                </td>
+                <td><ui-cover :src="item.url">{{ item.ext }}</ui-cover></td>
                 <td>
                     <div class="fw-bold">{{ item.name }}</div>
                     <div v-if="item.folder"><small>/{{ item.folder }}</small></div>

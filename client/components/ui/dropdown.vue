@@ -2,11 +2,21 @@
     <div class="ui-dropdown d-inline-block" :class="`ui-dropdown-type-${type}`">
         <slot></slot>
 
-        <div class="ui-dropdown-dropdown bg-white shadow-sm" :class="{'ui-dropdown-dropdown-shown':props.shown}">
-            <slot name="dropdown">
-                Ações
-            </slot>
-        </div>
+        <el-collapse-transition>
+            <div class="ui-dropdown-dropdown bg-white shadow-sm" v-if="props.shown && !isMobile">
+                <slot name="dropdown">
+                    Ações
+                </slot>
+            </div>
+        </el-collapse-transition>
+
+        <el-drawer
+            title="I am the title"
+            :visible.sync="props.shown"
+            :with-header="false"
+            v-if="isMobile">
+            <slot name="dropdown"></slot>
+        </el-drawer>
     </div>
 </template>
 
@@ -33,61 +43,43 @@ export default {
 
     data() {
         return {
+            isMobile: (window.innerWidth <= 768),
             props: JSON.parse(JSON.stringify(this.$props)),
         };
     },
 
     methods: {
-        handleClick(ev) {
-            this.props.shown = this.$el.contains(document.activeElement);
+        onClick(ev) {
+            this.props.shown = this.$el.contains(ev.target);
+            if (ev.target.classList.contains('el-drawer__container')) {
+                this.props.shown = false;
+            }
+        },
+
+        onResize() {
+            this.isMobile = window.innerWidth <= 768;
         },
     },
 
     mounted() {
-        document.addEventListener('click', this.handleClick);
+        document.addEventListener('click', this.onClick);
+        window.addEventListener('resize', this.onResize);
     },
 
     beforeDestroy() {
-        document.removeEventListener('click', this.handleClick);
+        document.removeEventListener('click', this.onClick);
+        window.removeEventListener('resize', this.onResize);
     },
 }
 </script>
 
 <style>
 .ui-dropdown {
-    position: relative;
+    /* position: relative; */
     z-index: 2;
 }
 
-.ui-dropdown-dropdown {
-    position: absolute;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 300ms ease;
-}
-
-.ui-dropdown .ui-dropdown-dropdown-shown,
-.ui-dropdown:hover .ui-dropdown-dropdown {
-    z-index: 9;
-    opacity: 1;
-    visibility: visible;
-}
-
-.ui-dropdown .ui-dropdown-dropdown-caret {
-    position: absolute;
-    color: #fff;
-    line-height: 0;
-    text-shadow: 0 0 #222;
-    opacity: 0;
-    visibility: hidden;
-}
-
-.ui-dropdown .ui-dropdown-dropdown-shown .ui-dropdown-dropdown-caret,
-.ui-dropdown:hover .ui-dropdown-dropdown-caret {
-    opacity: 1;
-    visibility: visible;
-}
-
+.ui-dropdown .ui-dropdown .el-drawer__body > * {width: 100% !important;}
 
 /* top-left */
 .ui-dropdown-type-top-left .ui-dropdown-dropdown {bottom:100%; left:0; margin-bottom:10px;}
@@ -136,4 +128,9 @@ export default {
 /* left-top */
 .ui-dropdown-type-left-top .ui-dropdown-dropdown {right:100%; top:0; margin-right:10px;}
 .ui-dropdown-type-left-top .ui-dropdown-dropdown:after {content:"▶"; position:absolute; top:20px; right:-10px; line-height:0; color:#fff;}
+
+@media (min-width: 992px) {
+    .ui-dropdown {position: relative;}
+    .ui-dropdown-dropdown {position:absolute;}
+}
 </style>

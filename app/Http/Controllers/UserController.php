@@ -17,8 +17,8 @@ class UserController extends Controller
 		]);
 	}
 
-	public function search()
-    {
-        return $this->model->search()->with(['photo'])->paginate(request('per_page', 15));
-    }
+	// public function search()
+    // {
+    //     return $this->model->search()->with(['photo'])->paginate(request('per_page', 15));
+    // }
 }

@@ -185,6 +185,29 @@ trait Model
     }
 
 
+    public function scopeWithJoin($query, $method, $fields=[], $params=[])
+    {   
+        $relation = call_user_func([$this, $method]);
+
+        $params = (object) array_merge([
+            'method' => 'join',
+            'from' => $query->getModel()->getTable(),
+            'table' => $relation->getRelated()->getTable(),
+            'key' => $relation->getForeignKeyName(),
+            'as' => $relation->getRelated()->getTable(),
+            'field' => $relation->getLocalKeyName(),
+        ], $params);
+
+        call_user_func([$query, $params->method], "{$params->table} as {$params->as}", "{$params->as}.{$params->key}", '=', "{$params->from}.{$params->field}");
+
+        $fields = array_map(function($field) use($params) {
+            return "{$params->as}.{$field} as {$params->as}_{$field}";
+        }, $fields);
+
+        $query->selectRaw(implode(', ', $fields));
+    }
+
+
     public function scopeFindIdOrSlug($query, $slugid)
     {
         $fillable = $this->fillable;
@@ -341,10 +364,14 @@ trait Model
             $query = $query2;
         }
 
+        $query_table = $query->getModel()->getTable();
+
         foreach($params as $field=>$value) {
             if (! $value) continue;
             if (! in_array($field, $this->fillable)) continue;
             if (in_array($field, $searchParams)) continue;
+            $field = "{$query_table}.{$field}";
+
 
             $operator = isset($params["{$field}_op"])? $params["{$field}_op"]: false;
 
@@ -416,7 +443,8 @@ trait Model
         }
 
         // ?orderby=id&order=desc
-        $query->orderBy($params['orderby'], $params['order']);
+        $order_by = "{$query_table}.{$params['orderby']}";
+        $query->orderBy($order_by, $params['order']);
 
         // ?q=term+search
         if ($params['q']) {
@@ -424,6 +452,7 @@ trait Model
             $whereLikes = [];
             foreach($terms as $q) {
                 foreach($this->fillable as $field) {
+                    $field = "{$query_table}.{$field}";
                     $whereLikes[] = [$field, 'like', "%{$q}%"];
                 }
             }
