@@ -17,7 +17,7 @@
 
         <!-- others -->
         <div class="flex-grow-1 p-2" v-else>
-            <pre class="m-0 p-0" :style="showAll? '': 'overflow:auto; max-height:50px;'">{{ value }}</pre>
+            <pre class="m-0 p-0" :style="'max-width:900px; overflow-x:visible;'+ (showAll? '': 'overflow-y:auto; max-height:50px;')">{{ value }}</pre>
         </div>
     </div>
 </template>
@@ -29,7 +29,7 @@ export default {
     },
 
     data: () => ({
-        showAll: false,
+        showAll: true,
     }),
 
     computed: {

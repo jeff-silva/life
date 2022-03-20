@@ -62,6 +62,8 @@ class AppBase extends \Illuminate\Console\Command
         $tables = [];
 
         foreach(\DB::select('SHOW TABLE STATUS') as $table) {
+            $table->Slug = (string) \Str::of($table->Name)->studly()->kebab();
+            // $table->Slug = $table->Slug=='users'? 'user': $table->Slug;
 
             $deletes = [
                 'Version', 'Row_format', 'Rows', 'Avg_row_length', 'Data_length', 'Max_data_length', 'Index_length',
@@ -122,5 +124,23 @@ class AppBase extends \Illuminate\Console\Command
         }
         else {  $dump = preg_replace('#\)$#', "]", $dump); }
         return $dump;
+    }
+
+    
+    public function getFolderClasses($folder, $deep=false)
+    {
+        $files = glob(realpath(base_path($folder)) .'/*.php');
+
+        if ($deep) {
+            $files = array_merge($files, glob(realpath(base_path($folder)) .'/**/*.php'));
+        }
+
+        return array_map(function($file) {
+            $file = str_replace(base_path('app'), '\App', $file);
+            $file = str_replace('/', '\\', $file);
+            $file = str_replace('.php', '', $file);
+            $file = trim($file, '\\');
+            return app($file);
+        }, $files);
     }
 }

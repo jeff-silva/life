@@ -8,6 +8,75 @@
 $database = env('DB_DATABASE');
 
 
+// Create table emails_templates
+\DB::select("CREATE TABLE IF NOT EXISTS `emails_templates` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci,
+  `params` text COLLATE utf8mb4_unicode_ci,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+
+// Create/Update column emails_templates.id
+\Schema::hasColumn('emails_templates', 'id')?
+	\DB::select("ALTER TABLE emails_templates MODIFY COLUMN `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT"):
+	\DB::select("ALTER TABLE emails_templates ADD COLUMN `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT");
+
+
+// Create/Update column emails_templates.slug
+\Schema::hasColumn('emails_templates', 'slug')?
+	\DB::select("ALTER TABLE emails_templates MODIFY COLUMN `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL"):
+	\DB::select("ALTER TABLE emails_templates ADD COLUMN `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
+
+
+// Create/Update column emails_templates.name
+\Schema::hasColumn('emails_templates', 'name')?
+	\DB::select("ALTER TABLE emails_templates MODIFY COLUMN `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL"):
+	\DB::select("ALTER TABLE emails_templates ADD COLUMN `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
+
+
+// Create/Update column emails_templates.subject
+\Schema::hasColumn('emails_templates', 'subject')?
+	\DB::select("ALTER TABLE emails_templates MODIFY COLUMN `subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL"):
+	\DB::select("ALTER TABLE emails_templates ADD COLUMN `subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL");
+
+
+// Create/Update column emails_templates.body
+\Schema::hasColumn('emails_templates', 'body')?
+	\DB::select("ALTER TABLE emails_templates MODIFY COLUMN `body` text COLLATE utf8mb4_unicode_ci"):
+	\DB::select("ALTER TABLE emails_templates ADD COLUMN `body` text COLLATE utf8mb4_unicode_ci");
+
+
+// Create/Update column emails_templates.params
+\Schema::hasColumn('emails_templates', 'params')?
+	\DB::select("ALTER TABLE emails_templates MODIFY COLUMN `params` text COLLATE utf8mb4_unicode_ci"):
+	\DB::select("ALTER TABLE emails_templates ADD COLUMN `params` text COLLATE utf8mb4_unicode_ci");
+
+
+// Create/Update column emails_templates.created_at
+\Schema::hasColumn('emails_templates', 'created_at')?
+	\DB::select("ALTER TABLE emails_templates MODIFY COLUMN `created_at` datetime DEFAULT NULL"):
+	\DB::select("ALTER TABLE emails_templates ADD COLUMN `created_at` datetime DEFAULT NULL");
+
+
+// Create/Update column emails_templates.updated_at
+\Schema::hasColumn('emails_templates', 'updated_at')?
+	\DB::select("ALTER TABLE emails_templates MODIFY COLUMN `updated_at` datetime DEFAULT NULL"):
+	\DB::select("ALTER TABLE emails_templates ADD COLUMN `updated_at` datetime DEFAULT NULL");
+
+
+// Create/Update column emails_templates.deleted_at
+\Schema::hasColumn('emails_templates', 'deleted_at')?
+	\DB::select("ALTER TABLE emails_templates MODIFY COLUMN `deleted_at` datetime DEFAULT NULL"):
+	\DB::select("ALTER TABLE emails_templates ADD COLUMN `deleted_at` datetime DEFAULT NULL");
+
+
 // Create table failed_jobs
 \DB::select("CREATE TABLE IF NOT EXISTS `failed_jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,

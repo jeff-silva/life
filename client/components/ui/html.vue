@@ -24,7 +24,9 @@
         <ui-code v-show="codeMode" v-model="props.value" language="html" style="min-height:100px;" @keyup.native="setValue(props.value)"></ui-code>
         
         <!-- Editor Wysiwyg -->
-        <div v-show="!codeMode" class="form-control rounded-0" style="min-height:100px;" contenteditable="true" ref="editor" @keyup="props.value=$event.target.innerHTML||'&nbsp;'"></div>
+        <div v-show="!codeMode" class="form-control rounded-0" style="min-height:100px;" contenteditable="true" ref="editor" @keyup="htmlKeyup($event)"></div>
+
+        <slot name="footer" :info="info" :value="props.value" :code-mode="codeMode"></slot>
     </div>
 </template>
 
@@ -38,6 +40,7 @@ export default {
         return {
             codeMode: false,
             props: JSON.parse(JSON.stringify(this.$props)),
+            info: {focus:false},
         };
     },
 
@@ -65,14 +68,31 @@ export default {
             return this.$refs.editor.innerHTML;
         },
 
+        appendValue(value) {
+            document.execCommand('insertHTML', false, value);
+        },
+
         command(a, b, c) {
             document.execCommand(a, b, c);
             this.props.value = this.$refs.editor.innerHTML;
+        },
+
+        htmlKeyup(ev) {
+            this.props.value = ev.target.innerHTML || '&nbsp;';
+        },
+
+        documentClick(ev) {
+            this.info.focus = this.$el.contains(ev.target);
         },
     },
 
     mounted() {
         this.setValue(this.props.value);
+        document.addEventListener("click", this.documentClick);
+    },
+
+    beforeDestroy() {
+        document.removeEventListener("click", this.documentClick);
     },
 }
 </script>

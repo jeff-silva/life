@@ -11,7 +11,10 @@ export default {
                 {label:"Novo", to:"/admin/user/new", children:[]},
                 {label:"Grupos", to:"/admin/users-groups", children:[]},
             ]},
-            {label:"Configurações", to:"/admin/settings", children:[]},
+            {label:"Configurações", to:"/admin/settings", children:[
+                {label:"Configurações", to:"/admin/settings", children:[]},
+                {label:"Templates de e-mails", to:"/admin/emails-templates", children:[]},
+            ]},
             {label:"Arquivos", children:[
                 {label:"Buscar", to:"/admin/files", children:[]},
                 {label:"Novo", to:"/admin/files/new", children:[]},

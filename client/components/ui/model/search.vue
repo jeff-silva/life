@@ -327,6 +327,8 @@ export default {
     margin-bottom: 15px;
 }
 
+.ui-model-search .table th {font-weight:bold;}
+
 .ui-model-search [data-orderby] {cursor:pointer;}
 .ui-model-search [data-order="asc"]:after {content: "↓"; float: right;}
 .ui-model-search [data-order="desc"]:after {content: "↑"; float: right;}

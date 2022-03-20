@@ -16,7 +16,7 @@ class UserWelcome extends \Illuminate\Mail\Mailable
         return 'Olá {{ $user->name }}';
     }
 
-    static function getTemplate() {
+    static function getBody() {
         return 'Seja bem vindo(a). <br>
         Por favor, verifique seu e-mail
         <a href="{{ $user->getVerifyLink() }}">clicando aqui</a>.';

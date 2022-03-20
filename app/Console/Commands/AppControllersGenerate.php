@@ -24,6 +24,12 @@ class AppControllersGenerate extends AppBase
                     "\$this->middleware('auth:api', [",
                     "\t'except' => ['search', 'find'],",
                     "]);",
+                    '',
+                    '// Generate default routes (search, find, save, delete, etc...)',
+                    "\$this->defaultRoutes();",
+                    '',
+                    "// Custom route example: POST /api/{$table->Slug}/test/123",
+                    "// \$this->route('post', '/test/{id}', '@test');",
                 ]));
 
                 file_put_contents(base_path($table->Controller->File), $file->__toString());

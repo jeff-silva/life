@@ -15,9 +15,7 @@
 			<td class="text-center">
 				<div v-if="item.person_from">
 					<nuxt-link :to="`/admin/life-persons/${item.person_from.id}`">
-						<el-image :src="item.person_from.photo? item.person_from.photo: ''" fit="cover" lazy style="width:50px; height:50px; border-radius:50%;">
-							<div slot="error" style="background:#ddd; height:50px;"></div>
-						</el-image>
+						<ui-cover :src="item.person_from.photo? item.person_from.photo: ''" :acron="item.person_from.name"></ui-cover>
 						<div class="text-center">
 							{{ item.person_from.name }} ({{ item.person_from.age|numberFormat('', '', 0) }})
 						</div>
@@ -30,9 +28,7 @@
 			<td class="text-center">
 				<div v-if="item.person_to">
 					<nuxt-link :to="`/admin/life-persons/${item.person_to.id}`">
-						<el-image :src="item.person_to.photo? item.person_to.photo: ''" fit="cover" lazy style="width:50px; height:50px; border-radius:50%;">
-							<div slot="error" style="background:#ddd; height:50px;"></div>
-						</el-image>
+						<ui-cover :src="item.person_to.photo? item.person_to.photo: ''" :acron="item.person_to.name"></ui-cover>
 						<div class="text-center">
 							{{ item.person_to.name }} ({{ item.person_to.age|numberFormat('', '', 0) }})
 						</div>

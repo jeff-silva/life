@@ -16,7 +16,8 @@ class AppInstall extends AppBase
 
         if (! \Schema::hasTable('migrations')) {
             $this->call('migrate');
-            $this->call('db:seed');
+            // $this->call('db:seed');
+            $this->call('app:seed');
             return;
         }
 

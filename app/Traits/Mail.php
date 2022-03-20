@@ -8,8 +8,8 @@ trait Mail {
         return 'no subject';
     }
 
-    static function getTemplate() {
-        return 'no template';
+    static function getBody() {
+        return 'no body';
     }
 
     static function getParamsMerge() {
@@ -26,7 +26,7 @@ trait Mail {
             if ($type = $param->getType()) {
                 $model = app($type->getName());
                 foreach($model->getFillable() as $field) {
-                    $return["\${$param->name}->{$field}"] = "Campo {$field}";
+                    $return["\${$param->name}->{$field}"] = $field;
                 }
             }
         }
@@ -34,11 +34,11 @@ trait Mail {
         $return = array_merge($return, self::getParamsMerge());
 
         // ksort($return);
-        return array_map(function($label, $name) {
+        return array_map(function($name, $id) {
             return [
-                'id' => $name,
-                'label' => $label,
-                'source' => "{{ $name }}",
+                'id' => $id,
+                'name' => $name,
+                'source' => "{{ $id }}",
             ];
         }, $return, array_keys($return));
     }
@@ -70,7 +70,7 @@ trait Mail {
         
         $data = $this->getParamsValues();
         $subject = $this->bladeCompile(self::getSubject(), $data);
-        $template = $this->bladeCompile(self::getTemplate(), $data);
+        $template = $this->bladeCompile(self::getBody(), $data);
 
         \Mail::send([], [], function ($message) use ($emails, $subject, $template) {
             $message->to($emails)->subject($subject)->setBody($template, 'text/html');

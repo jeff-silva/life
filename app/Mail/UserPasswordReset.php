@@ -16,7 +16,7 @@ class UserPasswordReset extends \Illuminate\Mail\Mailable
         return 'Alteração de senha';
     }
 
-    static function getTemplate() {
+    static function getBody() {
         return 'Uma requisição para alterar senha foi gerada. <br>
         Caso não tenha sido você, ignore este e-mail. <br><br>
         Seu código para alteração de senha é: <br>

@@ -8,6 +8,7 @@
 
 new \App\Http\Controllers\AppController;
 new \App\Http\Controllers\AuthController;
+new \App\Http\Controllers\EmailsTemplatesController;
 new \App\Http\Controllers\FilesController;
 new \App\Http\Controllers\LifeEventsController;
 new \App\Http\Controllers\LifePersonsController;
